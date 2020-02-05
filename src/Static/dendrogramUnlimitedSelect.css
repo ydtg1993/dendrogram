@@ -1,0 +1,121 @@
+#dendrogram-unlimited-select {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.dendrogram-select-button {
+    background-color: transparent;
+    color: #222;
+    border: 1px solid #e5e5e5;
+    margin: 0;
+    font: inherit;
+    text-transform: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 30px 0 15px;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    text-decoration: none;
+    transition: .1s ease-in-out;
+    transition-property: color, background-color, border-color;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    cursor: pointer;
+}
+
+.dendrogram-select-button:hover, .dendrogram-select-button:focus {
+    background-color: transparent;
+    color: #222;
+    border-color: #b2b2b2
+}
+
+.dendrogram-select-button:active {
+    background-color: transparent;
+    color: #222;
+    border-color: #999
+}
+
+.dendrogram-select-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 1020;
+    box-sizing: border-box;
+    padding: 12px;
+    background: #fff;
+    color: #666;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    width: 150px;
+
+    animation-name: dendrogram-fade-show-select;
+    animation-duration: .2s;
+    animation-direction: reverse;
+    animation-timing-function: ease-in;
+}
+
+.dendrogram-select-dropdown ul {
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dendrogram-select-dropdown ul > li {
+    font-size: 13px;
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.dendrogram-select-dropdown ul > li:first-child{
+    margin-top: 0;
+}
+
+.dendrogram-select-dropdown ul > li:hover {
+    color: #666;
+}
+
+.dendrogram-select-dropdown ul > li:active {
+    color: #333;
+}
+
+.dendrogram-select-dropdown ul > li:after {
+    content: " ";
+    display: block;
+    margin-top: 7px;
+    border-bottom: 1px solid #efefef;
+    transition: .3s ease-in-out;
+}
+.dendrogram-select-dropdown ul > li:hover:after{
+    content: " ";
+    display: block;
+    margin-top: 7px;
+    border-bottom: 1px solid  #d2d0d0;
+    transition: .3s ease-in-out;
+}
+.dendrogram-select-dropdown ul > li:last-child:after{
+    display: none;
+}
+
+@keyframes dendrogram-fade-show-select {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}

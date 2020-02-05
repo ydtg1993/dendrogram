@@ -1,0 +1,24 @@
+{
+    "name": "dendrogram/dendrogram",
+    "description": "php对关系型数据转换成树状图",
+    "authors": [
+        {
+            "name": "Hikki",
+            "email": "946818508@qq.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "DenDroGram\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+
+        }
+    }
+}
