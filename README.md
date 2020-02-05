@@ -22,6 +22,9 @@
     </tr>
 </table>
 
+![example](https://github.com/ydtg1993/dendrogram/blob/master/image/view.png)
+![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
+
 ### 1.安装
 `composer require dendrogram/dendrogram:v1.2`
 
@@ -88,6 +91,12 @@
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
+            <td style="text-align:left;">buildSelect</td>
+            <td style="text-align:left;">生成下拉列表</td>
+            <td style="text-align:left;">根节点id |列表选项显示字段 |列表选项值</td>
+            <td style="text-align:left;">html文本 *获取选项结果可在js中调用dendrogramUS.storage()</td>
+        </tr>
+        <tr>
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
             <td style="text-align:left;">action增删改标识 |data节点详情数据</td>
@@ -101,11 +110,6 @@
         </tr>
     </tbody>
 </table>
-
-### 图形展示
-
-![example](https://github.com/ydtg1993/dendrogram/blob/master/image/view.png)
-![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
 
 ##### 获取数据
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
