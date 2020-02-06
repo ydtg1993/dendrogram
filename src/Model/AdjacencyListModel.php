@@ -23,7 +23,7 @@ class AdjacencyListModel extends Model
     /**
      * @var array
      */
-    protected $guarded = ['id','p_id'];
+    protected $guarded = ['id','p_id','layer'];
 
     /**
      * Create a new Eloquent model instance.

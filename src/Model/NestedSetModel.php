@@ -13,9 +13,19 @@ use Illuminate\Support\Facades\DB;
 class NestedSetModel extends Model
 {
     /**
-     * @var string 
+     * @var string
      */
     protected $table = 'dendrogram_nested';
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * @var array
+     */
+    protected $guarded = ['id','left','right','layer'];
 
     /**
      * Create a new Eloquent model instance.
@@ -29,16 +39,6 @@ class NestedSetModel extends Model
 
         $this->table = config('dendrogram.nested_table','dendrogram_nested');
     }
-
-    /**
-     * @var bool 
-     */
-    public $timestamps = false;
-
-    /**
-     * @var array 
-     */
-    protected $guarded = ['id'];
 
     public static function add($data)
     {
@@ -83,7 +83,7 @@ class NestedSetModel extends Model
         $children = $children->toArray();
         return $children;
     }
-    
+
     public static function deleteAll($id)
     {
         DB::beginTransaction();

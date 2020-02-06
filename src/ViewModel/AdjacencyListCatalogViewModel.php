@@ -55,7 +55,7 @@ EOF;
 </li>
 EOF;
 
-    protected $guarded = ['id','p_id'];
+    protected $guarded = ['id','p_id','layer'];
 
     public function __construct($column)
     {

@@ -34,7 +34,7 @@
                     callback(xhr.responseText);
                 }
             };
-            
+
             xhr.send(JSON.stringify(data));
         },
         bindClassEnvent: function (className, event, func) {
@@ -104,7 +104,11 @@
                     if ((item instanceof HTMLElement) == false) {
                         continue;
                     }
-                    item.value = '';
+                    if(name == 'sort'){
+                        item.value = 0;
+                    }else {
+                        item.value = '';
+                    }
                     item.placeholder = name;
                 }
                 dendrogram.tree.id = data.id;

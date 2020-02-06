@@ -14,6 +14,9 @@
             }
             return storage;
         },
+        callback:function(){
+
+        },
         create: function (data) {
             var dom = document.getElementById('dendrogram-unlimited-select');
             if (!dom) {
@@ -62,11 +65,13 @@
                 if(child.children.length <= 0){
                     liDom.addEventListener('click',function () {
                         bindEvent(this);
+                        dendrogramUS.callback();
                     });
                 }else {
                     liDom.addEventListener('click',function () {
                         bindEvent(this);
                         dendrogramUS.create(child);
+                        dendrogramUS.callback();
                     });
                 }
 
