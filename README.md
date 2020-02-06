@@ -1,7 +1,7 @@
 <h3 align="center">PHP系统树图</h3>
 
 <p align="center">
-<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v1.2-orange.svg" alt="v1.2"></a>
+<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v1.3-orange.svg" alt="v1.3"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/laravel-5.*-yellow.svg" alt="laravel 5.*"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/PHP-%3E%3D5.6-blue.svg" alt="PHP>=5.6"></a>
 </p>
@@ -26,7 +26,7 @@
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
 
 ### 1.安装
-`composer require dendrogram/dendrogram:v1.2`
+`composer require dendrogram/dendrogram:v1.3`
 
 ### 2.配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
@@ -46,6 +46,10 @@
 `php artisan migrate`
 
     两表四个自定义函数 表名可先行在配置文件中修改
+    
+    migrations下增加中国城市sql文件
+    由于查询节点过多需要配置mysql
+    SET GLOBAL group_concat_max_len = 20460;
     
 
 ### 数据结构概述
