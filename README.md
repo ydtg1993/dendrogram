@@ -98,7 +98,8 @@
             <td style="text-align:left;">buildSelect</td>
             <td style="text-align:left;">生成下拉列表</td>
             <td style="text-align:left;">根节点id |列表选项显示字段 |列表选项值</td>
-            <td style="text-align:left;">html文本 *获取选项结果可在js中调用dendrogramUS.storage() 点击选项回调方法dendrogramUS.callback()</td>
+            <td style="text-align:left;">html文本 *获取选项结果可在js中调用dendrogramUS.storage() 
+                点击选项回调方法dendrogramUS.callback()</td>
         </tr>
         <tr>
             <td style="text-align:left;">operateNode</td>
