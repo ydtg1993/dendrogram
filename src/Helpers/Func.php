@@ -30,52 +30,6 @@ class Func
     }
 
     /**
-     * @param array $lists
-     * @param $id_name
-     * @param $p_id_name
-     * @param string $childKey
-     * @return array
-     */
-    public static function quadraticArrayToTreeData(array $lists,$id_name, $p_id_name)
-    {
-        $lists = self::quadraticArraySort($lists,$p_id_name);
-        $map = [];
-        $res = [];
-        foreach ($lists as $id => &$item) {
-            $pid = &$item[$p_id_name];
-            $map[$item[$id_name]] = &$item;
-            if (!isset($map[$pid])) {
-                $res[$id] = &$item;
-            } else {
-                $pItem = &$map[$pid];
-                $pItem['children'][] = &$item;
-            }
-        }
-        return $res;
-    }
-
-    /**
-     * 二维度数组排序
-     * @param $array
-     * @param $field
-     * @return array
-     */
-    public static function quadraticArraySort(array $array, $field)
-    {
-        $new_array = array();
-        foreach ($array as $k => $v) {
-            $v['children'] = [];
-            if(isset($new_array[$v[$field]])){
-                $new_array[$v[$field] + 1] = $v;
-                continue;
-            }
-            $new_array[$v[$field]] = $v;
-        }
-
-        return $new_array;
-    }
-
-    /**
      * 首位sprintf
      * @param $string
      * @param string $aim

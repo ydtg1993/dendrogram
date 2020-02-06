@@ -8,7 +8,6 @@
 
 namespace DenDroGram\Model;
 
-
 class AdjacencyListModel extends Model
 {
     /**
@@ -39,9 +38,9 @@ class AdjacencyListModel extends Model
         $this->table = config('dendrogram.adjacency_table','dendrogram_adjacency');
     }
 
-    public static function getChildren($id)
+    public static function getChildren($id,$order = 'ASC')
     {
-        $data = self::whereRaw("FIND_IN_SET(id,dendrogramAdjacencyGetChildren($id))")->orderBy('layer', 'ASC')->orderBy('sort', 'DESC')->get();
+        $data = self::whereRaw("FIND_IN_SET(id,(select * from (select dendrogramAdjacencyGetChildren($id) as ids) ids))")->orderBy('layer', $order)->orderBy('sort', 'DESC')->orderBy('id', 'ASC')->get();
         if(!$data){
             return [];
         }
