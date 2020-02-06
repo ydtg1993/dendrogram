@@ -104,7 +104,6 @@
                     if ((item instanceof HTMLElement) == false) {
                         continue;
                     }
-                    console.log(data[name])
                     if(typeof(data[name]) == "number"){
                         item.value = 0;
                     }else {
