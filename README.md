@@ -47,6 +47,10 @@
 
     两表四个自定义函数 表名可先行在配置文件中修改
     
+    migrations下增加中国城市sql文件
+    由于查询节点过多需要配置mysql
+    SET GLOBAL group_concat_max_len = 20460;
+    
 
 ### 数据结构概述
 
