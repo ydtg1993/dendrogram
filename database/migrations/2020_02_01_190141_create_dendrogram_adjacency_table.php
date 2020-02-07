@@ -27,7 +27,7 @@ class CreateDendrogramAdjacencyTable extends Migration
             ["id"=>2,"p_id"=>1,"layer"=>1,"name"=>"四川"],
             ["id"=>3,"p_id"=>1,"layer"=>1,"name"=>"北京"],
             ["id"=>4,"p_id"=>2,"layer"=>2,"name"=>"成都"],
-            ["id"=>5,"p_id"=>2,"layer"=>3,"name"=>"绵阳"]
+            ["id"=>5,"p_id"=>2,"layer"=>2,"name"=>"绵阳"]
         ]);
 
         $sql = <<<EOF
