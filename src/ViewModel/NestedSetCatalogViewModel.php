@@ -55,8 +55,6 @@ EOF;
 </li>
 EOF;
 
-    protected $guarded = ['id','left','right','layer'];
-
     public function __construct($column)
     {
         parent::__construct($column);
