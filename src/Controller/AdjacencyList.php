@@ -65,11 +65,11 @@ EOF;
         return sprintf($view, $css, $js, $html);
     }
 
-    public function buildSelect($id, $label, $value)
+    public function buildSelect($id, $label, $value,array $default = [])
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
-        $js = sprintf($js, $label, $value);
+        $js = sprintf($js, $label, $value,json_encode($default));
         $tree = json_encode($this->getTreeData($id));
         $view = <<<EOF
 <style>%s</style>

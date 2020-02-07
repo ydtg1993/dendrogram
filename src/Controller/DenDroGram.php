@@ -80,13 +80,15 @@ class DenDroGram implements Structure
      * @param string $label
      * 列表选项值
      * @param string $value
+     * 显示的字段默认值 根据层级深度填入元素个数
+     * @param array $default
      * @return mixed
      * @throws \Exception
      */
-    public function buildSelect($id,$label = 'name',$value = 'id')
+    public function buildSelect($id,$label = 'name',$value = 'id',array $default = [])
     {
         try {
-            $result = $this->instance->buildSelect($id,$label,$value);
+            $result = $this->instance->buildSelect($id,$label,$value,$default);
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }

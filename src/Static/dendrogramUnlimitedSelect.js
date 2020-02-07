@@ -5,6 +5,7 @@
     var dendrogramUS = {
         label:'%s',
         value:'%s',
+        default:JSON.parse('%s'),
         storage:function () {
             var dom = document.getElementById('dendrogram-unlimited-select');
             var storage = [];
@@ -32,8 +33,20 @@
             var tag = "<svg style=\"vertical-align: middle;position: absolute;right:7px;top: 10px;\" width=\"20\" height=\"20\"\n" +
                 "viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\" data-svg=\"triangle-down\">\n" +
                 "<polygon points=\"5 7 15 7 10 12\"></polygon></svg>";
-            content.innerHTML = '<span>'+data.children[0][dendrogramUS.label]+'</span>'+tag;
-            content.setAttribute('data-value',data.children[0][dendrogramUS.value]);
+
+            if(dendrogramUS.default.length <= 0){
+                content.innerHTML = '<span>'+data.children[0][dendrogramUS.label]+'</span>'+tag;
+                content.setAttribute('data-value',data.children[0][dendrogramUS.value]);
+            }else {
+                data.children.forEach(function (d) {
+                    var index = dendrogramUS.default.indexOf(d['id']);
+                    if(index !== -1){
+                        content.innerHTML = '<span>'+d[dendrogramUS.label]+'</span>'+tag;
+                        content.setAttribute('data-value',d[dendrogramUS.value]);
+                        dendrogramUS.default.splice(index,1);
+                    }
+                })
+            }
             box.appendChild(content);
 
             var dropDownDom = document.createElement('div');

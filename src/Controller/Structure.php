@@ -30,9 +30,11 @@ interface Structure
      * @param $id
      * @param $label
      * @param $value
+     * 显示的字段默认值 根据层级深度填入元素个数
+     * @param array $default
      * @return mixed
      */
-    public function buildSelect($id,$label,$value);
+    public function buildSelect($id,$label,$value,array $default = []);
 
     /**
      * @param $id
