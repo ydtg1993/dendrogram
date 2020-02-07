@@ -1,7 +1,7 @@
 <h3 align="center">PHP系统树图</h3>
 
 <p align="center">
-<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v1.3-orange.svg" alt="v1.3"></a>
+<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v2.0-orange.svg" alt="v2.0"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/laravel-5.*-yellow.svg" alt="laravel 5.*"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/PHP-%3E%3D5.6-blue.svg" alt="PHP>=5.6"></a>
 </p>
@@ -26,7 +26,7 @@
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
 
 ### 1.安装
-`composer require dendrogram/dendrogram:v1.3`
+`composer require dendrogram/dendrogram:v2.0`
 
 ### 2.配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
