@@ -85,26 +85,26 @@
         <tr>
             <td style="text-align:left;">buildCatalog</td>
             <td style="text-align:left;">生成目录式结构树</td>
-            <td style="text-align:left;">根节点id |操作节点的路由POST方式 |节点显示字段</td>
+            <td style="text-align:left;">根节点id <br/>操作节点的路由POST方式 <br/>节点显示字段</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
             <td style="text-align:left;">buildRhizome</td>
             <td style="text-align:left;">生成根茎视图</td>
-            <td style="text-align:left;">根节点id |操作节点的路由POST方式 |节点显示字段</td>
+            <td style="text-align:left;">根节点id <br/>操作节点的路由POST方式 <br/>节点显示字段</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
             <td style="text-align:left;">生成下拉列表</td>
-            <td style="text-align:left;">根节点id |列表选项显示字段 |列表选项值 |列表选项默认值</td>
-            <td style="text-align:left;">html文本 *获取选项结果可在js中调用dendrogramUS.storage() 
-                点击选项回调方法dendrogramUS.callback()</td>
+            <td style="text-align:left;">根节点id <br/>列表选项显示字段 <br/>列表选项值 <br/>列表选项默认值</td>
+            <td style="text-align:left;">html文本 <br/>获取选项结果可在js中调用dendrogramUS.storage() 
+                <br/>点击选项回调方法dendrogramUS.callback()</td>
         </tr>
         <tr>
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
-            <td style="text-align:left;">action增删改标识 |data节点详情数据</td>
+            <td style="text-align:left;">action增删改标识 <br/>data节点详情数据</td>
             <td style="text-align:left;">返回boolean</td>
         </tr>
         <tr>
