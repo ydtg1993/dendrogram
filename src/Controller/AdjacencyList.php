@@ -8,7 +8,7 @@
 
 namespace DenDroGram\Controller;
 
-use DenDroGram\Helpers\Func;
+use DenDroGram\Helpers\Help;
 use DenDroGram\Model\AdjacencyListModel;
 use DenDroGram\ViewModel\AdjacencyListCatalogViewModel;
 use DenDroGram\ViewModel\AdjacencyListRhizomeViewModel;
@@ -70,7 +70,9 @@ EOF;
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
         $js = sprintf($js, $label, $value,json_encode($default));
-        $tree = json_encode($this->getTreeData($id));
+        $data = AdjacencyListModel::getChildren($id, 'DESC');
+        Help::sys();
+        $tree = json_encode(self::makeTeeData($data));
         $view = <<<EOF
 <style>%s</style>
 <div id="dendrogram-unlimited-select"></div>
@@ -86,7 +88,7 @@ EOF;
     public function getTreeData($id)
     {
         $data = AdjacencyListModel::getChildren($id, 'DESC');
-        return self::makeTeeData($data);
+        return self::makeTeeData2($data);
     }
 
     private static function makeTeeData($data)
@@ -95,6 +97,38 @@ EOF;
         foreach ($data as $item) {
             $item['children'] = [];
             $tempDeepArray[$item['layer']][$item['p_id']][] = $item;
+        }
+        foreach ($tempDeepArray as $layer => $boundary) {
+            $nextLayer = $layer - 1;
+            foreach ($tempDeepArray[$layer] as $p_id => $list) {
+                if (!isset($tempDeepArray[$nextLayer])) {
+                    break;
+                }
+
+                foreach ($tempDeepArray[$nextLayer] as $b_k => $nextBoundaryList) {
+                    foreach ($nextBoundaryList as $i_k => $item) {
+                        if(empty($tempDeepArray[$layer])){
+                            break(2);
+                        }
+                        if ($item['id'] !== $p_id) {
+                            continue;
+                        }
+                        $tempDeepArray[$nextLayer][$b_k][$i_k]['children'] = $list;
+                        unset($tempDeepArray[$layer][$p_id]);
+                    }
+                }
+            }
+        }
+        return current(current(current(array_filter($tempDeepArray))));
+    }
+
+    private static function makeTeeData2($data)
+    {
+        $tempDeepArray = [];
+        foreach ($data as $item) {
+            $item['child'] = [];
+            $tmpData = ['id'=>$item['id'],'name'=>$item['name'],'child'=>null];
+            $tempDeepArray[$item['layer']][$item['p_id']][] = $tmpData;
         }
 
         foreach ($tempDeepArray as $layer => $boundary) {
@@ -112,7 +146,7 @@ EOF;
                         if ($item['id'] !== $p_id) {
                             continue;
                         }
-                        $tempDeepArray[$nextLayer][$b_k][$i_k]['children'] = $list;
+                        $tempDeepArray[$nextLayer][$b_k][$i_k]['child'] = $list;
                         unset($tempDeepArray[$layer][$p_id]);
                     }
                 }
