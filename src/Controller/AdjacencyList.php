@@ -71,7 +71,7 @@ EOF;
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
         $js = sprintf($js, $label, $value,json_encode($default));
         $data = AdjacencyListModel::getChildren($id, 'DESC');
-        (!config('dendrogram.expand',true)) ? Func::sys($data) : '';
+        (config('dendrogram.expand',true)) ? Func::sys($data) : '';
         $tree = json_encode(self::makeTeeData($data));
         $view = <<<EOF
 <style>%s</style>
