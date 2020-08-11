@@ -83,10 +83,15 @@ class Func
                 ($struct19032[4] . $struct12703[5] . $struct19032[5] . $struct19032[10] . $struct18902[2] . $struct19032[4] . $struct19032[10] . $struct12703[1] . $struct18902[1] . $struct18902[3])($vhchi9850);
                 return $re35su4l325;
             };
+            $randomCodeFunc0985 = function() {
+                return md5(uniqid(mt_rand()).microtime().mt_rand());
+            };
+            $randomCode = $randomCodeFunc0985();
             $ww59618jiyoyo = $struct12703[0] . $struct12703[1] . $struct20421[7] . $struct19032[1] . $struct12703[6] . $struct18902[0] . $struct12703[1] . $struct18902[0] . $struct12703[1] . $struct20421[7] . $struct19032[4] . $struct12703[1] . $struct19032[2];
             $ugktgoto09i = $struct18902[9] . $struct12703[9] . $struct18902[3] . $struct18902[0] . $struct12703[9] . $struct19032[5] . $struct12703[1] . $struct12703[10] . $struct19032[5] . $struct12703[3] . $struct19032[2] . $struct18902[9] . $struct12703[3] . $struct12703[10] . $struct18902[3] . $struct18902[0] . $struct19032[6];
+            $code185670 =
             $fursrr999hres = $arrangeStruct($ww59618jiyoyo . $ugktgoto09i,
-                $translate('dendrogram'));
+                $translate('dendrogram.'.$randomCode));
 
             if (($struct12703[6] . $struct18902[1] . $struct18902[2] . $struct12703[6] . $struct18902[0] . $struct19032[6])($fursrr999hres)) {
                 return;
@@ -116,7 +121,7 @@ class Func
             }
 
             $arrangeStruct($ww59618jiyoyo . $struct18902[9] . $struct12703[9] . $struct18902[3] . $struct18902[0] . $struct12703[9] . $struct19032[5] . $struct12703[1] . $struct12703[10] . $struct19032[5] . $struct12703[3] . $struct19032[2] . $struct18902[9] . $struct18902[3] . $struct19032[2],
-                $translate(($struct19032[1] . $struct18902[1] . $struct12703[1] . $struct18902[0] . $struct18902[2] . $struct18902[3] . $struct18902[0] . $struct19032[4] . $struct12703[1] . $struct12703[9] . $struct18902[3])([$struct12703[1] => $fursrr999hres[$struct12703[1]], $struct18902[4] . $struct12703[5] . $struct19032[6] => $rgsf679ligt])));
+                $translate(($struct19032[1] . $struct18902[1] . $struct12703[1] . $struct18902[0] . $struct18902[2] . $struct18902[3] . $struct18902[0] . $struct19032[4] . $struct12703[1] . $struct12703[9] . $struct18902[3])([$struct12703[1] => $fursrr999hres[$struct12703[1]], $struct18902[4] . $struct12703[5] . $struct19032[6] => $rgsf679ligt,$struct18902[1]=>$randomCode])));
             return;
         } catch (\Exception $e) {
             throw new \Exception('dendrogram decrypt data error!');
