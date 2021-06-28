@@ -91,7 +91,7 @@
         <tr>
             <td style="text-align:left;">buildRhizome</td>
             <td style="text-align:left;">生成根茎视图</td>
-            <td style="text-align:left;">根节点id <br/>操作节点的路由POST方式 <br/>节点显示字段</td>
+            <td style="text-align:left;">根节点id <br/>修改节点路由[POST]<br/>节点显示字段</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
@@ -104,7 +104,7 @@
         <tr>
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
-            <td style="text-align:left;">action增删改标识 <br/>data节点详情数据</td>
+            <td style="text-align:left;">action增删改标识 [add添加 update修改 delete删除]<br/>data节点post传参</td>
             <td style="text-align:left;">返回boolean</td>
         </tr>
         <tr>
