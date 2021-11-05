@@ -36,13 +36,14 @@ class DenDroGram implements Structure
      * @param $router
      * 显示的字段
      * @param array $column
+     * @param int $cache
      * @return mixed
      * @throws \Exception
      */
-    public function buildCatalog($id,$router, array $column = ['name'])
+    public function buildCatalog($id,$router, array $column = ['name'], $cache = -1)
     {
         try {
-            $result = $this->instance->buildCatalog($id,$router, $column);
+            $result = $this->instance->buildCatalog($id,$router, $column, $cache);
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }
@@ -58,13 +59,14 @@ class DenDroGram implements Structure
      * @param $router
      * 显示的字段
      * @param array $column
+     * @param int $cache
      * @return mixed
      * @throws \Exception
      */
-    public function buildRhizome($id,$router, array $column = ['name'])
+    public function buildRhizome($id,$router, array $column = ['name'], $cache = -1)
     {
         try {
-            $result = $this->instance->buildRhizome($id,$router, $column);
+            $result = $this->instance->buildRhizome($id,$router, $column, $cache);
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }
@@ -82,13 +84,14 @@ class DenDroGram implements Structure
      * @param string $value
      * 显示的字段默认值 根据层级深度填入元素个数
      * @param array $default
+     * @param int $cache
      * @return mixed
      * @throws \Exception
      */
-    public function buildSelect($id,$label = 'name',$value = 'id',array $default = [])
+    public function buildSelect($id,$label = 'name',$value = 'id',array $default = [], $cache = -1)
     {
         try {
-            $result = $this->instance->buildSelect($id,$label,$value,$default);
+            $result = $this->instance->buildSelect($id,$label,$value,$default, $cache);
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }
@@ -99,12 +102,13 @@ class DenDroGram implements Structure
      * 获取数据结构
      * @param $id
      * @return mixed
+     * @param int $cache
      * @throws \Exception
      */
-    public function getTreeData($id)
+    public function getTreeData($id, $cache = -1)
     {
         try {
-            $result = $this->instance->getTreeData($id);
+            $result = $this->instance->getTreeData($id, $cache);
         }catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }

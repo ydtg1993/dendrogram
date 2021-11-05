@@ -19,15 +19,18 @@ class AdjacencyList implements Structure
      * @param $id
      * @param $router
      * @param array $column
+     * @param int $cache
      * @return mixed|string
      */
-    public function buildCatalog($id, $router, array $column = ['name'])
+    public function buildCatalog($id, $router, array $column = ['name'], $cache = -1)
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
         $js = sprintf($js, $router);
 
-        $data = AdjacencyListModel::getChildren($id);
+        $data = Func::getCache("AdjacencyList-buildCatalog-{$id}", $cache, function () use ($id) {
+            return AdjacencyListModel::getChildren($id);
+        });
         $html = (new AdjacencyListCatalogViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
@@ -43,15 +46,18 @@ EOF;
      * @param $id
      * @param $router
      * @param array $column
+     * @param int $cache
      * @return mixed|string
      */
-    public function buildRhizome($id, $router, array $column = ['name'])
+    public function buildRhizome($id, $router, array $column = ['name'], $cache = -1)
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
         $js = sprintf($js, $router);
 
-        $data = AdjacencyListModel::getChildren($id);
+        $data = Func::getCache("AdjacencyList-buildRhizome-{$id}", $cache, function () use ($id) {
+            return AdjacencyListModel::getChildren($id);
+        });
         $html = (new AdjacencyListRhizomeViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
@@ -65,13 +71,24 @@ EOF;
         return sprintf($view, $css, $js, $html);
     }
 
-    public function buildSelect($id, $label, $value,array $default = [])
+    /**
+     * @param $id
+     * @param $label
+     * @param $value
+     * @param array $default
+     * @param int $cache
+     * @return mixed|string
+     * @throws \Exception
+     */
+    public function buildSelect($id, $label, $value, array $default = [], $cache = -1)
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
-        $js = sprintf($js, $label, $value,json_encode($default));
-        $data = AdjacencyListModel::getChildren($id, 'DESC');
-        (config('dendrogram.expand',true)) ? Func::sys($data) : '';
+        $js = sprintf($js, $label, $value, json_encode($default));
+
+        $data = Func::getCache("AdjacencyList-buildSelect-{$id}", $cache, function () use ($id) {
+            return AdjacencyListModel::getChildren($id, 'DESC');
+        });
         $tree = json_encode(self::makeTeeData($data));
         $view = <<<EOF
 <style>%s</style>
@@ -83,11 +100,14 @@ EOF;
 
     /**
      * @param $id
+     * @param int $cache
      * @return array
      */
-    public function getTreeData($id)
+    public function getTreeData($id, $cache = -1)
     {
-        $data = AdjacencyListModel::getChildren($id, 'DESC');
+        $data = Func::getCache("AdjacencyList-getTreeData-{$id}", $cache, function () use ($id) {
+            return AdjacencyListModel::getChildren($id, 'DESC');
+        });
         return self::makeTeeData2($data);
     }
 
@@ -107,7 +127,7 @@ EOF;
 
                 foreach ($tempDeepArray[$nextLayer] as $b_k => $nextBoundaryList) {
                     foreach ($nextBoundaryList as $i_k => $item) {
-                        if(empty($tempDeepArray[$layer])){
+                        if (empty($tempDeepArray[$layer])) {
                             break(2);
                         }
                         if ($item['id'] !== $p_id) {
@@ -127,7 +147,7 @@ EOF;
         $tempDeepArray = [];
         foreach ($data as $item) {
             $item['child'] = [];
-            $tmpData = ['id'=>$item['id'],'name'=>$item['name'],'child'=>null];
+            $tmpData = ['id' => $item['id'], 'name' => $item['name'], 'child' => null];
             $tempDeepArray[$item['layer']][$item['p_id']][] = $tmpData;
         }
 
@@ -140,7 +160,7 @@ EOF;
 
                 foreach ($tempDeepArray[$nextLayer] as $b_k => $nextBoundaryList) {
                     foreach ($nextBoundaryList as $i_k => $item) {
-                        if(empty($tempDeepArray[$layer])){
+                        if (empty($tempDeepArray[$layer])) {
                             break(2);
                         }
                         if ($item['id'] !== $p_id) {

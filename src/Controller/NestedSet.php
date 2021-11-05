@@ -8,6 +8,7 @@
 
 namespace DenDroGram\Controller;
 
+use DenDroGram\Helpers\Func;
 use DenDroGram\Model\NestedSetModel;
 use DenDroGram\ViewModel\NestedSetCatalogViewModel;
 use DenDroGram\ViewModel\NestedSetRhizomeSetViewModel;
@@ -18,15 +19,18 @@ class NestedSet implements Structure
      * @param $id
      * @param $router
      * @param array $column
+     * @param int $cache
      * @return mixed|string
      */
-    public function buildCatalog($id,$router, array $column = ['name'])
+    public function buildCatalog($id,$router, array $column = ['name'], $cache = -1)
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
         $js = sprintf($js,$router);
 
-        $data = NestedSetModel::getChildren($id);
+        $data = Func::getCache("NestedSet-buildCatalog-{$id}", $cache, function () use ($id) {
+            return NestedSetModel::getChildren($id);
+        });
         $html = (new NestedSetCatalogViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
@@ -42,15 +46,18 @@ EOF;
      * @param $id
      * @param $router
      * @param array $column
+     * @param int $cache
      * @return mixed|string
      */
-    public function buildRhizome($id,$router,array $column = ['name'])
+    public function buildRhizome($id,$router,array $column = ['name'], $cache = -1)
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
         $js = sprintf($js,$router);
 
-        $data = NestedSetModel::getChildren($id);
+        $data = Func::getCache("NestedSet-buildRhizome-{$id}", $cache, function () use ($id) {
+            return NestedSetModel::getChildren($id);
+        });
         $html = (new NestedSetRhizomeSetViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
@@ -65,12 +72,25 @@ EOF;
         return sprintf($view,$css,$js,$html);
     }
 
-    public function buildSelect($id,$label,$value,array $default = [])
+    /**
+     * @param $id
+     * @param $label
+     * @param $value
+     * @param array $default
+     * @param int $cache
+     * @return mixed|string
+     */
+    public function buildSelect($id,$label,$value,array $default = [], $cache = -1)
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
         $js = sprintf($js,$label,$value,json_encode($default));
-        $tree = json_encode($this->getTreeData($id));
+
+        $data = Func::getCache("NestedSet-buildSelect-{$id}", $cache, function () use ($id) {
+            return NestedSetModel::getChildren($id);
+        });
+        self::makeTeeData($data,$tree);
+        $tree = json_encode(current($tree));
         $view = <<<EOF
 <style>%s</style>
 <div id="dendrogram-unlimited-select"></div>
@@ -81,11 +101,14 @@ EOF;
 
     /**
      * @param $id
+     * @param int $cache
      * @return mixed
      */
-    public function getTreeData($id)
+    public function getTreeData($id, $cache = -1)
     {
-        $data = NestedSetModel::getChildren($id);
+        $data = Func::getCache("NestedSet-getTreeData-{$id}", $cache, function () use ($id) {
+            return NestedSetModel::getChildren($id);
+        });
         self::makeTeeData($data,$tree);
         return current($tree);
     }
