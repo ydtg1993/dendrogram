@@ -108,7 +108,7 @@
         <tr>
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
-            <td style="text-align:left;">action增删改标识 [add添加 update修改 delete删除]<br/>data节点post传参</td>
+            <td style="text-align:left;"><b>action</b>:增删改标识 [添加记录:add 修改:update 删除:delete]<br/><b>data</b>:修改节点记录的传参[post方式]</td>
             <td style="text-align:left;">返回boolean</td>
         </tr>
         <tr>
