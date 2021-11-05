@@ -68,14 +68,15 @@
 
 ### code说明
 
-##### 生成对象
+##### 1.生成对象
         /*adjacency list数据结构*/
         new DenDroGram(AdjacencyList::class)
         
         /*nested set数据结构*/
         new DenDroGram(NestedSet::class)
-
-##### 调用方法
+        
+        两种不同数据结构分别对应两张表，请根据实际业务场景选择
+##### 2.调用方法
 <table>
     <thead>
         <tr>
