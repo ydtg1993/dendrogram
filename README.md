@@ -120,6 +120,10 @@
     </tbody>
 </table>
 
+```
+可参考test目录下面的测试样例
+```
+
 ##### 获取数据
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
 
