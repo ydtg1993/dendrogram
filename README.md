@@ -9,7 +9,7 @@
     PHP系统树图可快速的处理无限极分类的业务需求 提供两种不同的数据结构和三种视图类型
     
     2.1：
-        1.版本修复级联选择器展示bug
+        1.版本修复级联选择器展示图标bug
         2.buildCatalog buildRhizome buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
     
 <table> 
