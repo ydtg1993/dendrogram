@@ -22,7 +22,7 @@
         <th style="text-align:left;">视图类型</td>
         <td style="text-align:left;">目录 catalog</td>
         <td style="text-align:left;">茎状 rhizome</td>
-        <td style="text-align:left;">下拉列表 select</td>
+        <td style="text-align:left;">级联下拉列表 select</td>
     </tr>
 </table>
 
