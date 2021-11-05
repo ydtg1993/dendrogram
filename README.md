@@ -8,6 +8,10 @@
 
     PHP系统树图可快速的处理无限极分类的业务需求 提供两种不同的数据结构和三种视图类型
     
+    2.1：
+        1.版本修复级联选择器展示bug
+        2.buildCatalog buildRhizome buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
+    
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
@@ -85,19 +89,19 @@
         <tr>
             <td style="text-align:left;">buildCatalog</td>
             <td style="text-align:left;">生成目录式结构树</td>
-            <td style="text-align:left;">根节点id <br/>操作节点的路由POST方式 <br/>节点显示字段</td>
+            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>router</b>:修改节点数据路由[POST方式] <br/><b>column</b>:节点展示记录字段名<br/><b>cache</b>:缓存时间</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
             <td style="text-align:left;">buildRhizome</td>
             <td style="text-align:left;">生成根茎视图</td>
-            <td style="text-align:left;">根节点id <br/>修改节点路由[POST]<br/>节点显示字段</td>
+            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>router</b>:修改节点数据路由[POST方式] <br/><b>column</b>:节点展示记录字段名<br/><b>cache</b>:缓存时间</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
             <td style="text-align:left;">生成下拉列表</td>
-            <td style="text-align:left;">根节点id <br/>列表选项显示字段 <br/>列表选项值 <br/>列表选项默认值</td>
+            <td style="text-align:left;"><b>id</b>:根节点id 根节点id <br/><b>label</b>:列表选项显示值(记录字段名) <br/><b>value</b>:列表选项值(记录字段名) <br/><b>default </b>:列表选项默认值(级联数组对应值) <br/><b>cache</b>:缓存时间 -1不缓存 0永久缓存 0>缓存n秒</td>
             <td style="text-align:left;">html文本 <br/>获取选项结果可在js中调用dendrogramUS.storage() 
                 <br/>点击选项回调方法dendrogramUS.callback()</td>
         </tr>
@@ -110,7 +114,7 @@
         <tr>
             <td style="text-align:left;">getTreeData</td>
             <td style="text-align:left;">获取结构型数据</td>
-            <td style="text-align:left;">根节点id</td>
+            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>cache</b>:缓存时间 -1不缓存 0永久缓存 0>缓存n秒</td>
             <td style="text-align:left;">返回array</td>
         </tr>
     </tbody>
