@@ -8,9 +8,6 @@
 
 namespace DenDroGram\Controller;
 
-
-use DenDroGram\ViewModel\ViewModel;
-
 class DenDroGram implements Structure
 {
     /**
@@ -57,7 +54,7 @@ class DenDroGram implements Structure
      * @return mixed
      * @throws \Exception
      */
-    public function buildRhizome($id, array $column = ['name'], $cache = -1, $router = '')
+    public function buildVertical($id, array $column = ['name'], $cache = -1, $router = '')
     {
         try {
             $result = $this->instance->buildVertical($id, $column, $cache, $router);

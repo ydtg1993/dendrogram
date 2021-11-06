@@ -10,21 +10,21 @@ require_once __DIR__.'/../autoload.php';
 class TestDendrogram
 {
     /**
-     * 1. 目录树视图
+     * 1. 横向视图
      */
-    function catalog()
+    function horizontal()
     {
         /*数据类型可直接使用
         *AdjacencyList::class 或 NestedSet::class 进行切换
         */
-        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildCatalog(1, 'http://operateCatalogRouter...');
+        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildHorizontal(1);
+        exit;
     }
 
     /**
      * 节点操作方法 路由POST方式
-     * 目录树视图
      */
-    function operateCatalog()
+    function operateHorizontal()
     {
         $action = $_POST['action'];
         $data = $_POST['data'];
@@ -35,21 +35,22 @@ class TestDendrogram
     }
 
     /**
-     * 2. 根茎视图
+     * 2. 竖向视图
      */
-    function rhizome()
+    function vertical()
     {
         /*数据类型可直接使用
         *AdjacencyList::class 或 NestedSet::class 进行切换
         */
-        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->buildRhizome(1, 'http://operateCatalogRouter...');
+        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->buildVertical(1);
+        exit;
     }
 
     /**
      * 节点操作方法 路由POST方式
      * 根茎视图
      */
-    function operateRhizome()
+    function operateVertical()
     {
         $action = $_POST['action'];
         $data = $_POST['data'];
@@ -57,16 +58,12 @@ class TestDendrogram
     }
 
     /**
-     * 3.下拉列表视图
-     * 此视图下只能选择 无法操作节点
+     * 3.级联下拉列表
      */
     function select()
     {
-        /*
-         * 生产下拉列表选择器
-         * 选择结果可通在js中调用 dendrogramUS.storage()
-         * */
         echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->buildSelect(1);
+        exit;
     }
 
     /**
