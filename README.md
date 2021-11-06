@@ -9,7 +9,7 @@
     PHP系统树图可快速的处理无限极分类的业务需求 提供两种不同的数据结构和三种视图类型
     
     2.1：
-        1.版本修复级联选择器展示bug
+        1.版本修复级联选择器展示图标bug
         2.buildCatalog buildRhizome buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
     
 <table> 
@@ -22,7 +22,7 @@
         <th style="text-align:left;">视图类型</td>
         <td style="text-align:left;">目录 catalog</td>
         <td style="text-align:left;">茎状 rhizome</td>
-        <td style="text-align:left;">下拉列表 select</td>
+        <td style="text-align:left;">级联下拉列表 select</td>
     </tr>
 </table>
 
@@ -68,14 +68,15 @@
 
 ### code说明
 
-##### 生成对象
+##### 1.生成对象
         /*adjacency list数据结构*/
         new DenDroGram(AdjacencyList::class)
         
         /*nested set数据结构*/
         new DenDroGram(NestedSet::class)
-
-##### 调用方法
+        
+        两种不同数据结构分别对应两张表，请根据实际业务场景选择
+##### 2.调用方法
 <table>
     <thead>
         <tr>
@@ -100,10 +101,10 @@
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
-            <td style="text-align:left;">生成下拉列表</td>
+            <td style="text-align:left;">生成级联下拉列表</td>
             <td style="text-align:left;"><b>id</b>: 根节点id 根节点id <br/><b>label</b>: 列表选项显示值(记录字段名) <br/><b>value</b>: 列表选项值(记录字段名) <br/><b>default </b>: 列表选项默认值(级联数组对应值) <br/><b>cache</b>: 缓存时间 -1不缓存 0永久缓存 0>缓存n秒</td>
-            <td style="text-align:left;">html文本 <br/>获取选项结果可在js中调用dendrogramUS.storage() 
-                <br/>点击选项回调方法dendrogramUS.callback()</td>
+            <td style="text-align:left;">html文本 <br/><i>获取选项结果事件的值：js中调用dendrogramUS.storage()</i> 
+                <br/><i>点击选项事件回调方法：dendrogramUS.callback()</i></td>
         </tr>
         <tr>
             <td style="text-align:left;">operateNode</td>
@@ -119,6 +120,10 @@
         </tr>
     </tbody>
 </table>
+
+```
+可参考test目录下面的测试样例
+```
 
 ##### 获取数据
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
