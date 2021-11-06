@@ -188,7 +188,7 @@ EOF;
 
     /**
      * 操作节点方法
-     * 
+     *
      * @param string $action 增删改标识 [添加记录:add 修改: update 删除: delete]
      * @param array $data 修改节点记录的传参[post方式]
      * @return mixed
