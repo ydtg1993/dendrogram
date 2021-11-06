@@ -21,78 +21,68 @@ class DenDroGram implements Structure
     public function __construct($structure)
     {
         $this->instance = new $structure;
-        if(!($this->instance instanceof Structure)){
+        if (!($this->instance instanceof Structure)) {
             throw new \Exception('import instance is not instanceof structure');
         }
 
     }
 
     /**
-     * 生成目录式视图
+     * 生成横向视图
      *
-     * 根节点ID
-     * @param $id
-     * 操作节点路由
-     * @param $router
-     * 显示的字段
-     * @param array $column
-     * @param int $cache
+     * @param int $id 根节点ID
+     * @param array $column 显示的字段
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
+     * @param string $router 操作节点路由
      * @return mixed
      * @throws \Exception
      */
-    public function buildCatalog($id,$router, array $column = ['name'], $cache = -1)
+    public function buildHorizontal($id, array $column = ['name'], $cache = -1, $router = '')
     {
         try {
-            $result = $this->instance->buildCatalog($id,$router, $column, $cache);
-        }catch (\Exception $e){
+            $result = $this->instance->buildHorizontal($id, $column, $cache, $router);
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
         return $result;
     }
 
     /**
-     * 生成茎状图
+     * 生成竖向视图
      *
-     * 根节点ID
-     * @param $id
-     * 操作节点路由
-     * @param $router
-     * 显示的字段
-     * @param array $column
-     * @param int $cache
+     * @param int $id 根节点ID
+     * @param array $column 显示的字段
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
+     * @param string $router 操作节点路由
      * @return mixed
      * @throws \Exception
      */
-    public function buildRhizome($id,$router, array $column = ['name'], $cache = -1)
+    public function buildRhizome($id, array $column = ['name'], $cache = -1, $router = '')
     {
         try {
-            $result = $this->instance->buildRhizome($id,$router, $column, $cache);
-        }catch (\Exception $e){
+            $result = $this->instance->buildVertical($id, $column, $cache, $router);
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
         return $result;
     }
 
     /**
-     * 生成下拉列表
+     * 生成级联下拉列表
      *
-     * 根节点ID
-     * @param $id
-     * 列表选项显示字段
-     * @param string $label
-     * 列表选项值
-     * @param string $value
-     * 显示的字段默认值 根据层级深度填入元素个数
-     * @param array $default
-     * @param int $cache
+     * @param int $id 根节点ID
+     * @param string $label 列表选项显示字段 [对应记录字段]
+     * @param string $value 列表选项值 [对应记录字段]
+     * @param array $default 显示的字段默认值 [根据数据维度填入相应元素个数]
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
      * @return mixed
      * @throws \Exception
      */
-    public function buildSelect($id,$label = 'name',$value = 'id',array $default = [], $cache = -1)
+    public function buildSelect($id, $label = 'name', $value = 'id', array $default = [], $cache = -1)
     {
         try {
-            $result = $this->instance->buildSelect($id,$label,$value,$default, $cache);
-        }catch (\Exception $e){
+            $result = $this->instance->buildSelect($id, $label, $value, $default, $cache);
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
         return $result;
@@ -100,16 +90,17 @@ class DenDroGram implements Structure
 
     /**
      * 获取数据结构
-     * @param $id
+     *
+     * @param int $id 根节点ID
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
      * @return mixed
-     * @param int $cache
      * @throws \Exception
      */
     public function getTreeData($id, $cache = -1)
     {
         try {
             $result = $this->instance->getTreeData($id, $cache);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
         return $result;
@@ -117,8 +108,9 @@ class DenDroGram implements Structure
 
     /**
      * 操作节点方法
-     * @param $action
-     * @param $data
+     *
+     * @param string $action 增删改标识 [添加记录:add 修改: update 删除: delete]
+     * @param array $data 修改节点记录的传参[post方式]
      * @return mixed
      * @throws \Exception
      */
@@ -126,7 +118,7 @@ class DenDroGram implements Structure
     {
         try {
             $result = $this->instance->operateNode($action, $data);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
         return $result;

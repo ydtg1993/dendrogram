@@ -16,19 +16,22 @@ use DenDroGram\ViewModel\NestedSetRhizomeSetViewModel;
 class NestedSet implements Structure
 {
     /**
-     * @param $id
-     * @param $router
-     * @param array $column
-     * @param int $cache
-     * @return mixed|string
+     * 生成横向视图
+     *
+     * @param int $id 根节点ID
+     * @param array $column 显示的字段
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
+     * @param string $router 操作节点路由
+     * @return mixed
+     * @throws \Exception
      */
-    public function buildCatalog($id,$router, array $column = ['name'], $cache = -1)
+    public function buildHorizontal($id, array $column = ['name'], $cache = -1, $router = '')
     {
-        $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
-        $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
-        $js = sprintf($js,$router);
+        $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
+        $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
+        $js = sprintf($js, $router);
 
-        $data = Func::getCache("NestedSet-buildCatalog-{$id}", $cache, function () use ($id) {
+        $data = Func::getCache("NestedSet-Horizontal-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
         $html = (new NestedSetCatalogViewModel($column))->index($data);
@@ -39,23 +42,26 @@ class NestedSet implements Structure
 <div id="mongolia"></div>
 <script>dendrogram.tree.init();</script>
 EOF;
-        return sprintf($view,$css,$js,$html);
+        return sprintf($view, $css, $js, $html);
     }
 
     /**
-     * @param $id
-     * @param $router
-     * @param array $column
-     * @param int $cache
-     * @return mixed|string
+     * 生成竖向视图
+     *
+     * @param int $id 根节点ID
+     * @param array $column 显示的字段
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
+     * @param string $router 操作节点路由
+     * @return mixed
+     * @throws \Exception
      */
-    public function buildRhizome($id,$router,array $column = ['name'], $cache = -1)
+    public function buildVertical($id, array $column = ['name'], $cache = -1, $router = '')
     {
-        $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
-        $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
-        $js = sprintf($js,$router);
+        $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
+        $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
+        $js = sprintf($js, $router);
 
-        $data = Func::getCache("NestedSet-buildRhizome-{$id}", $cache, function () use ($id) {
+        $data = Func::getCache("NestedSet-Vertical-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
         $html = (new NestedSetRhizomeSetViewModel($column))->index($data);
@@ -69,53 +75,59 @@ EOF;
 <div id="mongolia"></div>
 <script>dendrogram.tree.init();</script>
 EOF;
-        return sprintf($view,$css,$js,$html);
+        return sprintf($view, $css, $js, $html);
     }
 
     /**
-     * @param $id
-     * @param $label
-     * @param $value
-     * @param array $default
-     * @param int $cache
-     * @return mixed|string
+     * 生成级联下拉列表
+     *
+     * @param int $id 根节点ID
+     * @param string $label 列表选项显示字段 [对应记录字段]
+     * @param string $value 列表选项值 [对应记录字段]
+     * @param array $default 显示的字段默认值 [根据数据维度填入相应元素个数]
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
+     * @return mixed
+     * @throws \Exception
      */
-    public function buildSelect($id,$label,$value,array $default = [], $cache = -1)
+    public function buildSelect($id, $label, $value, array $default = [], $cache = -1)
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
-        $js = sprintf($js,$label,$value,json_encode($default));
+        $js = sprintf($js, $label, $value, json_encode($default));
 
-        $data = Func::getCache("NestedSet-buildSelect-{$id}", $cache, function () use ($id) {
+        $data = Func::getCache("NestedSet-Select-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
-        self::makeTeeData($data,$tree);
+        self::makeTeeData($data, $tree);
         $tree = json_encode(current($tree));
         $view = <<<EOF
 <style>%s</style>
 <div id="dendrogram-unlimited-select"></div>
 <script>%s dendrogramUS.create(%s);</script>
 EOF;
-        return sprintf($view,$css,$js,$tree);
+        return sprintf($view, $css, $js, $tree);
     }
 
     /**
-     * @param $id
-     * @param int $cache
+     * 获取数据结构
+     *
+     * @param int $id 根节点ID
+     * @param int $cache 缓存时间 默认：-1不缓存 0永久缓存 0>缓存n秒
      * @return mixed
+     * @throws \Exception
      */
     public function getTreeData($id, $cache = -1)
     {
-        $data = Func::getCache("NestedSet-getTreeData-{$id}", $cache, function () use ($id) {
+        $data = Func::getCache("NestedSet-TreeData-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
-        self::makeTeeData($data,$tree);
+        self::makeTeeData($data, $tree);
         return current($tree);
     }
 
     private static function makeTeeData(&$array, &$branch = [])
     {
-        if(empty($array)){
+        if (empty($array)) {
             return;
         }
 
@@ -124,12 +136,12 @@ EOF;
             $item['children'] = [];
             $branch[] = $item;
             if (!empty($array)) {
-                self::makeTeeData($array,$branch);
+                self::makeTeeData($array, $branch);
             }
             return;
         }
 
-        foreach ($branch as $k=>&$b) {
+        foreach ($branch as $k => &$b) {
             $b['children'] = [];
             $shoot = [];
             foreach ($array as $key => $value) {
@@ -141,27 +153,30 @@ EOF;
             }
 
             if (!empty($array) && !empty($shoot)) {
-                self::makeTeeData($array,$shoot);
+                self::makeTeeData($array, $shoot);
                 $b['children'] = $shoot;
-            }elseif (empty($array) && !empty($shoot)){
-                self::makeTeeData($array,$shoot);
+            } elseif (empty($array) && !empty($shoot)) {
+                self::makeTeeData($array, $shoot);
                 $b['children'] = $shoot;
             }
         }
     }
 
     /**
-     * @param $action
-     * @param $data
-     * @return bool
+     * 操作节点方法
+     *
+     * @param string $action 增删改标识 [添加记录:add 修改: update 删除: delete]
+     * @param array $data 修改节点记录的传参[post方式]
+     * @return mixed
+     * @throws \Exception
      */
-    public function operateNode($action,$data)
+    public function operateNode($action, $data)
     {
-        if($action == 'add' && isset($data['p_id'])){
+        if ($action == 'add' && isset($data['p_id'])) {
             return NestedSetModel::add($data);
-        }elseif ($action == 'update' && isset($data['id'])){
-            return NestedSetModel::where('id',$data['id'])->update($data);
-        }elseif ($action == 'delete' && isset($data['id'])){
+        } elseif ($action == 'update' && isset($data['id'])) {
+            return NestedSetModel::where('id', $data['id'])->update($data);
+        } elseif ($action == 'delete' && isset($data['id'])) {
             return NestedSetModel::deleteAll($data['id']);
         }
         return false;
