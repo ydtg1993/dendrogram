@@ -93,32 +93,32 @@
             <td style="text-align:left;">buildHorizontal</td>
             <td style="text-align:left;">生成横向视图</td>
             <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;">html文本</td>
+            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会绑定点击修改,增加节点的弹窗表单</i></br></br>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;">html文本</td>
+            <td style="text-align:left;"><b>html文本</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
             <td style="text-align:left;">生成级联下拉列表</td>
             <td style="text-align:left;"><b>id</b>: 根节点id 根节点id <br/><b>label</b>: 列表选项显示值(记录字段名) <br/><b>value</b>: 列表选项值(记录字段名) <br/><b>default </b>: 列表选项默认值(级联数组对应值) <br/><b>cache</b>: 缓存时间 -1不缓存 0永久缓存 0>缓存n秒</td>
-            <td style="text-align:left;">html文本 <br/><i>获取选项结果事件的值：js中调用dendrogramUS.storage()</i> 
-                <br/><i>点击选项事件回调方法：dendrogramUS.callback()</i></td>
+            <td style="text-align:left;"><b>html文本</b><br/><i>获取选项结果事件的值：js中调用dendrogramUS.storage()</i> 
+                <br/><i>点击选项事件回调方法：js中调用dendrogramUS.callback = 回调方法</i></td>
         </tr>
         <tr>
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
             <td style="text-align:left;"><b>action</b>: 增删改标识 [添加记录:add 修改: update 删除: delete]<br/><b>data</b>: 修改节点记录的传参[post方式]</td>
-            <td style="text-align:left;">boolean</td>
+    <td style="text-align:left;"><b>boolean</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">getTreeData</td>
             <td style="text-align:left;">获取结构型数据</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>cache</b>: 缓存时间 [-1不缓存 0永久缓存 0>缓存n秒]</td>
-            <td style="text-align:left;">array</td>
+            <td style="text-align:left;"><b>array</b></td>
         </tr>
     </tbody>
 </table>
