@@ -112,13 +112,13 @@
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
             <td style="text-align:left;"><b>action</b>: 增删改标识 [添加记录:add 修改: update 删除: delete]<br/><b>data</b>: 修改节点记录的传参[post方式]</td>
-            <td style="text-align:left;">返回boolean</td>
+            <td style="text-align:left;">boolean</td>
         </tr>
         <tr>
             <td style="text-align:left;">getTreeData</td>
             <td style="text-align:left;">获取结构型数据</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>cache</b>: 缓存时间 [-1不缓存 0永久缓存 0>缓存n秒]</td>
-            <td style="text-align:left;">返回array</td>
+            <td style="text-align:left;">array</td>
         </tr>
     </tbody>
 </table>
