@@ -9,11 +9,10 @@
     PHP系统树图可快速的处理无限极分类的业务需求 提供两种不同的数据结构和三种视图类型
     
     2.1：
-        1.版本修复级联选择器展示图标bug
+        1.版本修视图图标bug
         2.视图 方法名称修改 buildCatalog buildRhizome ==》 buildHorizontal buildVertical
         3.buildHorizontal buildVertical buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
-        4.视图路由参数变更为非必要 
-        5.视图操作节点增加点击事件 
+        4.视图路由参数router变更为非必要  传递router路由参数视图会自动绑定点击节点修改,增加按钮时的弹窗表单
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
@@ -93,13 +92,13 @@
             <td style="text-align:left;">buildHorizontal</td>
             <td style="text-align:left;">生成横向视图</td>
             <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会绑定点击修改,增加节点的弹窗表单</i></br></br>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i></td>
+            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会自动绑定点击节点修改,增加按钮时的弹窗表单</i><hr/>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i><br/><br/><i>删除dom子元素 dendrogram.removeChildrenDom(dom)</br> 添加dom元素dendrogram.appendChildDom(dom, html) </br>替换dom元素dendrogram.relpaceChild(dom, html)</i></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>html文本</b></td>
+            <td style="text-align:left;"><b>同上</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
