@@ -101,7 +101,7 @@
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
-            <td style="text-align:left;">生成下拉列表</td>
+            <td style="text-align:left;">生成级联下拉列表</td>
             <td style="text-align:left;"><b>id</b>: 根节点id 根节点id <br/><b>label</b>: 列表选项显示值(记录字段名) <br/><b>value</b>: 列表选项值(记录字段名) <br/><b>default </b>: 列表选项默认值(级联数组对应值) <br/><b>cache</b>: 缓存时间 -1不缓存 0永久缓存 0>缓存n秒</td>
             <td style="text-align:left;">html文本 <br/><i>获取选项结果事件的值：js中调用dendrogramUS.storage()</i> 
                 <br/><i>点击选项事件回调方法：dendrogramUS.callback()</i></td>
