@@ -9,11 +9,10 @@
     PHP系统树图可快速的处理无限极分类的业务需求 提供两种不同的数据结构和三种视图类型
     
     2.1：
-        1.版本修复级联选择器展示图标bug
+        1.版本修视图图标bug
         2.视图 方法名称修改 buildCatalog buildRhizome ==》 buildHorizontal buildVertical
         3.buildHorizontal buildVertical buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
-        4.视图路由参数变更为非必要 
-        5.视图操作节点增加点击事件 
+        4.视图路由参数router变更为非必要  传递router路由参数视图会自动绑定点击节点修改,增加按钮时的弹窗表单
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
