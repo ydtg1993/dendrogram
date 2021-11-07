@@ -23,8 +23,7 @@ abstract class ViewModel
     <div class="dendrogram-form-header">
         <h2 id="dendrogram-form-theme"></h2>
     </div>
-    <div class="dendrogram-form-body">
-        %s
+    <div class="dendrogram-form-body" id="dendrogram-form-body">
     </div>
     <div class="dendrogram-form-footer">
         <button class="dendrogram-form-delete" type="button">删除</button>
@@ -32,8 +31,6 @@ abstract class ViewModel
     </div>
 </div>
 EOF;
-
-    protected $guarded = ['id','left','right','layer','p_id'];
 
     protected $icon = [
         'expand'=>'<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle> <line fill="none" stroke="#fff" x1="9.5" y1="5" x2="9.5" y2="14"></line> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"></line></svg>',

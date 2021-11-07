@@ -67,9 +67,8 @@ EOF;
         }else{
             $this->branch = Func::firstSprintf($this->branch,'none');
         }
-        $struct = $this->getDataStruct($data);
         $this->makeTree($data, $tree);
-        $this->makeForm($struct);
+        $this->tree_view.=$this->form;
         return $this->tree_view;
     }
 
@@ -123,12 +122,6 @@ EOF;
         }
     }
 
-    private function getDataStruct($data)
-    {
-        $item = current($data);
-        return array_keys($item);
-    }
-
     private function hasChildren($item,$data)
     {
         foreach ($data as $key => $value) {
@@ -137,19 +130,6 @@ EOF;
             }
         }
         return false;
-    }
-
-    private function makeForm($struct)
-    {
-        $input = '<input class="dendrogram-input" name="%s" value="%s">';
-        $form_content = '';
-        foreach ($struct as $item){
-            if(in_array($item,$this->guarded)){
-                continue;
-            }
-            $form_content.=sprintf($input,$item,'{'.$item.'}');
-        }
-        $this->tree_view = $this->tree_view.sprintf($this->form,$form_content);
     }
 
     private function makeColumn($data)

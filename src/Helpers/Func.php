@@ -51,7 +51,11 @@ class Func
         if($cache < 0){
             return $func();
         }
-        $file = __DIR__ . '/../../cache/' . $file;
+        $dir = __DIR__ . '/../../cache/';
+        if(!is_dir($dir)){
+            mkdir($dir);
+        }
+        $file = $dir . $file;
         $now = time();
         if (file_exists($file)) {
             $content = (array)json_decode(file_get_contents($file),true);
