@@ -23,10 +23,10 @@ EOF;
     private $leaf = <<<EOF
 <li>
     <div data-v=%s data-sign=%d class="dendrogram-vertical-branch">
-            <a href="javascript:void(0);" class="dendrogram-tab">
+            <a href="javascript:void(0);" class="dendrogram-switch">
                 %s
              </a>
-             <button class="dendrogram-button" href="javascript:void(0);">
+             <button class="dendrogram-tab" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -40,10 +40,10 @@ EOF;
     private $leaf_apex = <<<EOF
 <li>
     <div data-v=%s class="dendrogram-vertical-branch">
-         <a href="javascript:void(0);" class="dendrogram-ban">
+         <a href="javascript:void(0);" class="dendrogram-swtich">
             %s
          </a>
-             <button class="dendrogram-button" href="javascript:void(0);">
+             <button class="dendrogram-tab" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
