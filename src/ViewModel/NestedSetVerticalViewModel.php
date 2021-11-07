@@ -91,8 +91,9 @@ EOF;
                     sprintf($this->leaf_apex,json_encode($item),$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],''));
                 return;
             } else {
+                $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
                 $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf,json_encode($item),(int)$this->sign,$this->icon['shrink'],$this->makeColumn($item),$this->icon['grow'],$this->branch));
+                    sprintf($this->leaf,json_encode($item),(int)$this->sign,$left_button,$this->makeColumn($item),$this->icon['grow'],$this->branch));
             }
         }
 
