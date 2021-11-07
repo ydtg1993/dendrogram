@@ -59,10 +59,25 @@ class TestDendrogram
 
     /**
      * 3.级联下拉列表
+     * dendrogramUS.storage() 获取当前列表选中的值
+     * dendrogramUS.callback 点击事件处罚的回调方法
      */
     function select()
     {
         echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->buildSelect(1);
+        /**
+        <script>
+            $(function() {
+            var data = dendrogramUS.storage();
+            console.log(data)
+            dendrogramUS.callback = function() {
+            var data = dendrogramUS.storage()
+            console.log(data)
+            alert('处罚点击事件回调 当前选中值:'+data);
+            }
+            });
+        </script>
+         */
         exit;
     }
 

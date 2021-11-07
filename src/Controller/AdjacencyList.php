@@ -10,8 +10,8 @@ namespace DenDroGram\Controller;
 
 use DenDroGram\Helpers\Func;
 use DenDroGram\Model\AdjacencyListModel;
-use DenDroGram\ViewModel\AdjacencyListCatalogViewModel;
-use DenDroGram\ViewModel\AdjacencyListRhizomeViewModel;
+use DenDroGram\ViewModel\AdjacencyListHorizontalViewModel;
+use DenDroGram\ViewModel\AdjacencyListVerticalViewModel;
 
 class AdjacencyList implements Structure
 {
@@ -34,7 +34,7 @@ class AdjacencyList implements Structure
         $data = Func::getCache("AdjacencyList-Horizontal-{$id}", $cache, function () use ($id) {
             return AdjacencyListModel::getChildren($id);
         });
-        $html = (new AdjacencyListCatalogViewModel($column))->index($data);
+        $html = (new AdjacencyListHorizontalViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
@@ -64,11 +64,11 @@ EOF;
         $data = Func::getCache("AdjacencyList-Vertical-{$id}", $cache, function () use ($id) {
             return AdjacencyListModel::getChildren($id);
         });
-        $html = (new AdjacencyListRhizomeViewModel($column))->index($data);
+        $html = (new AdjacencyListVerticalViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
-<div class="dendrogram dendrogram-rhizome dendrogram-animation-fade">
+<div class="dendrogram dendrogram-vertical dendrogram-animation-fade">
 %s
 </div>
 <div id="mongolia"></div>

@@ -10,8 +10,8 @@ namespace DenDroGram\Controller;
 
 use DenDroGram\Helpers\Func;
 use DenDroGram\Model\NestedSetModel;
-use DenDroGram\ViewModel\NestedSetCatalogViewModel;
-use DenDroGram\ViewModel\NestedSetRhizomeSetViewModel;
+use DenDroGram\ViewModel\NestedSetHorizontalViewModel;
+use DenDroGram\ViewModel\NestedSetVerticalViewModel;
 
 class NestedSet implements Structure
 {
@@ -34,7 +34,7 @@ class NestedSet implements Structure
         $data = Func::getCache("NestedSet-Horizontal-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
-        $html = (new NestedSetCatalogViewModel($column))->index($data);
+        $html = (new NestedSetHorizontalViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
@@ -64,11 +64,11 @@ EOF;
         $data = Func::getCache("NestedSet-Vertical-{$id}", $cache, function () use ($id) {
             return NestedSetModel::getChildren($id);
         });
-        $html = (new NestedSetRhizomeSetViewModel($column))->index($data);
+        $html = (new NestedSetVerticalViewModel($column))->index($data);
         $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
-<div class="dendrogram dendrogram-rhizome dendrogram-animation-fade">
+<div class="dendrogram dendrogram-vertical dendrogram-animation-fade">
 %s
 <div class="clear_both"></div>
 </div>

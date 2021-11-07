@@ -11,20 +11,20 @@ namespace DenDroGram\ViewModel;
 
 use DenDroGram\Helpers\Func;
 
-class AdjacencyListCatalogViewModel extends ViewModel
+class AdjacencyListHorizontalViewModel extends ViewModel
 {
     private $root = <<<EOF
-<ul class="dendrogram dendrogram-catalog-list dendrogram-animation-fade">%s</ul>
+<ul class="dendrogram dendrogram-horizontal-list dendrogram-animation-fade">%s</ul>
 EOF;
 
     private $branch = <<<EOF
-<ul class="dendrogram dendrogram-catalog-branch" style="display:%s">%s</ul>
+<ul class="dendrogram dendrogram-horizontal-branch" style="display:%s">%s</ul>
 EOF;
 
     private $leaf = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d class="dendrogram-catalog-node">
-            <a href="javascript:void(0);" class="dendrogram-swtich">
+    <div data-v=%s data-sign=%d class="dendrogram-horizontal-node">
+            <a href="javascript:void(0);" class="dendrogram-switch">
                 %s
              </a>
              <button class="dendrogram-tab" href="javascript:void(0);">
@@ -40,7 +40,7 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s class="dendrogram-catalog-node">
+    <div data-v=%s class="dendrogram-horizontal-node">
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s
          </a>

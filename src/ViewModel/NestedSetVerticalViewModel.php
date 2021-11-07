@@ -8,10 +8,9 @@
 
 namespace DenDroGram\ViewModel;
 
-
 use DenDroGram\Helpers\Func;
 
-class AdjacencyListRhizomeViewModel extends ViewModel
+class NestedSetVerticalViewModel extends ViewModel
 {
     private $root = <<<EOF
 <ul>%s</ul>
@@ -23,11 +22,11 @@ EOF;
 
     private $leaf = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d class="dendrogram-rhizome-branch">
-            <a href="javascript:void(0);" class="dendrogram-switch">
+    <div data-v=%s data-sign=%d class="dendrogram-vertical-branch">
+            <a href="javascript:void(0);" class="dendrogram-tab">
                 %s
              </a>
-             <button class="dendrogram-tab" href="javascript:void(0);">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -40,11 +39,11 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s class="dendrogram-rhizome-branch">
+    <div data-v=%s class="dendrogram-vertical-branch">
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s
          </a>
-             <button class="dendrogram-tab" href="javascript:void(0);">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -84,7 +83,8 @@ EOF;
 
         if (empty($tree)) {
             $item = array_shift($array);
-            $tree[$item['id']] = [];
+            $item['children'] = [];
+            $tree[] = $item;
             if (empty($array)) {
                 //no children
                 $this->tree_view = sprintf($this->root,
@@ -96,13 +96,14 @@ EOF;
             }
         }
 
-        foreach ($tree as $branch => &$leaves) {
+        foreach ($tree as &$branch) {
             $shoot = [];
             foreach ($array as $key => $value) {
-                if ($value['p_id'] == $branch) {
-                    $leaves[$value['id']] = [];
+                if (($branch['layer'] + 1) == $value['layer'] && $branch['left'] < $value['left'] && $branch['right'] > $value['left']) {
+                    $value['children'] = [];
+                    $branch['children'][] = $value;
                     unset($array[$key]);
-                    if (Func::quadraticArrayGetIndex($array, ['p_id' => $value['id']]) === false) {
+                    if (!$this->hasChildren($value,$array)) {
                         //无子节点
                         $shoot[] = $this->makeBranch($value, false);
                     } else {
@@ -111,13 +112,23 @@ EOF;
                 }
             }
 
-            if (!empty($leaves) && $array) {
+            if (!empty($branch['children']) && $array) {
                 $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
-                $this->makeTree($array, $leaves);
-            } elseif (!empty($leaves)) {
+                $this->makeTree($array, $branch['children']);
+            } elseif (!empty($branch['children'])) {
                 $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
             }
         }
+    }
+
+    private function hasChildren($item,$data)
+    {
+        foreach ($data as $key => $value) {
+            if(($item['layer'] + 1) == $value['layer'] && $item['left'] < $value['left'] && $item['right'] > $value['right']){
+                return true;
+            }
+        }
+        return false;
     }
 
     private function getDataStruct($data)

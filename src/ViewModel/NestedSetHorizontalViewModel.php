@@ -8,21 +8,22 @@
 
 namespace DenDroGram\ViewModel;
 
+
 use DenDroGram\Helpers\Func;
 
-class NestedSetRhizomeSetViewModel extends ViewModel
+class NestedSetHorizontalViewModel extends ViewModel
 {
     private $root = <<<EOF
-<ul>%s</ul>
+<ul class="dendrogram dendrogram-horizontal-list dendrogram-animation-fade">%s</ul>
 EOF;
 
     private $branch = <<<EOF
-<ul style="display:%s">%s</ul>
+<ul class="dendrogram dendrogram-horizontal-branch" style="display:%s">%s</ul>
 EOF;
 
     private $leaf = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d class="dendrogram-rhizome-branch">
+    <div data-v=%s data-sign=%d class="dendrogram-horizontal-node">
             <a href="javascript:void(0);" class="dendrogram-tab">
                 %s
              </a>
@@ -39,7 +40,7 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s class="dendrogram-rhizome-branch">
+    <div data-v=%s class="dendrogram-horizontal-node">
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s
          </a>
@@ -50,6 +51,7 @@ EOF;
             %s
          </a>
     </div>
+    %s
 </li>
 EOF;
 
@@ -66,33 +68,33 @@ EOF;
             $this->branch = Func::firstSprintf($this->branch,'none');
         }
         $struct = $this->getDataStruct($data);
-        $this->makeTree($data,$tree);
+        $this->makeTree($data, $tree);
         $this->makeForm($struct);
         return $this->tree_view;
     }
 
     /**
-     * @param $array
-     * @param array $tree
+     * @param array $array
+     * @param $tree
      */
-    private function makeTree(&$array, &$tree = [])
+    private function makeTree(&$array, &$tree)
     {
-        if(empty($array)){
+        if (empty($array)) {
             return;
         }
+
+        $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
 
         if (empty($tree)) {
             $item = array_shift($array);
             $item['children'] = [];
             $tree[] = $item;
             if (empty($array)) {
-                //no children
-                $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf_apex,json_encode($item),$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],''));
+                //无子节点
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, json_encode($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
                 return;
             } else {
-                $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf,json_encode($item),(int)$this->sign,$this->icon['shrink'],$this->makeColumn($item),$this->icon['grow'],$this->branch));
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf, json_encode($item),(int)$this->sign,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
             }
         }
 
@@ -121,6 +123,12 @@ EOF;
         }
     }
 
+    private function getDataStruct($data)
+    {
+        $item = current($data);
+        return array_keys($item);
+    }
+
     private function hasChildren($item,$data)
     {
         foreach ($data as $key => $value) {
@@ -129,12 +137,6 @@ EOF;
             }
         }
         return false;
-    }
-
-    private function getDataStruct($data)
-    {
-        $item = current($data);
-        return array_keys($item);
     }
 
     private function makeForm($struct)
@@ -157,6 +159,7 @@ EOF;
         foreach ($this->column as $column){
             $html.=sprintf($text,isset($data[$column])?$data[$column]:'');
         }
+
         return $html;
     }
 
