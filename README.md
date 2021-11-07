@@ -10,8 +10,10 @@
     
     2.1：
         1.版本修复级联选择器展示图标bug
-        2.buildCatalog buildRhizome buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
-    
+        2.视图 方法名称修改 buildCatalog buildRhizome ==》 buildHorizontal buildVertical
+        3.buildHorizontal buildVertical buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
+        4.视图路由参数变更为非必要 
+        5.视图操作节点增加点击事件 
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
@@ -20,8 +22,8 @@
     </tr>
     <tr>
         <th style="text-align:left;">视图类型</td>
-        <td style="text-align:left;">目录 catalog</td>
-        <td style="text-align:left;">茎状 rhizome</td>
+        <td style="text-align:left;">横向视图 Horizontal</td>
+        <td style="text-align:left;">竖向视图 Vertical</td>
         <td style="text-align:left;">级联下拉列表 select</td>
     </tr>
 </table>
