@@ -93,13 +93,13 @@
             <td style="text-align:left;">buildHorizontal</td>
             <td style="text-align:left;">生成横向视图</td>
             <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会绑定点击修改,增加节点的弹窗表单</i></br></br>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i></td>
+            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会绑定点击修改,增加节点的弹窗表单</i><hr/>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i><br/><br/><i>删除dom子元素 dendrogram.removeChildrenDom(dom)</br> 添加dom元素dendrogram.appendChildDom(dom, html) </br>替换dom元素dendrogram.relpaceChild(dom, html)</i></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>html文本</b></td>
+            <td style="text-align:left;"><b>同上</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
