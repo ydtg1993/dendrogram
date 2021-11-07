@@ -90,14 +90,14 @@
     </thead>
     <tbody>
         <tr>
-            <td style="text-align:left;">buildCatalog</td>
-            <td style="text-align:left;">生成目录式结构树</td>
+            <td style="text-align:left;">buildHorizontal</td>
+            <td style="text-align:left;">生成横向视图</td>
             <td style="text-align:left;"><b>id</b>:根节点id <br/><b>router</b>: 修改节点数据路由[POST方式] <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间</td>
             <td style="text-align:left;">html文本</td>
         </tr>
         <tr>
-            <td style="text-align:left;">buildRhizome</td>
-            <td style="text-align:left;">生成根茎视图</td>
+            <td style="text-align:left;">buildVertical</td>
+            <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>router</b>: 修改节点数据路由[POST方式] <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间</td>
             <td style="text-align:left;">html文本</td>
         </tr>
