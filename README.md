@@ -13,6 +13,8 @@
         2.视图 方法名称修改 buildCatalog buildRhizome ==》 buildHorizontal buildVertical
         3.buildHorizontal buildVertical buildSelect getTreeData 方法增加数据缓存 默认：-1不缓存 0永久缓存 0>缓存n秒
         4.视图路由参数router变更为非必要  传递router路由参数视图会自动绑定点击节点修改,增加按钮时的弹窗表单
+        5.可绑定的按钮事件 节点标签按钮dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法) 节点新增按钮dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法)
+        6.弹窗增加可自定义配置项dendrogram.form.settings 
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
@@ -31,7 +33,7 @@
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
 
 ### 1.安装
-`composer require dendrogram/dendrogram:v2.0`
+`composer require dendrogram/dendrogram:v2.1`
 
 ### 2.配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
@@ -91,14 +93,26 @@
         <tr>
             <td style="text-align:left;">buildHorizontal</td>
             <td style="text-align:left;">生成横向视图</td>
-            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会自动绑定点击节点修改,增加按钮时的弹窗表单</i><hr/>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);</i><br/><br/><i>删除dom子元素 dendrogram.removeChildrenDom(dom)</br> 添加dom元素dendrogram.appendChildDom(dom, html) </br>替换dom元素dendrogram.relpaceChild(dom, html)</i></td>
+            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 [开发目录权限chmod -R 0777 vendor/dendrogram/]<br/><b>router</b>: 修改节点数据路由[POST方式] </td>
+            <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会自动绑定点击节点修改,增加按钮时的弹窗表单</i><hr/>自定义js代码块</br><i>绑定事件到节点的标签tab,添加按钮grow：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法)</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法)</i><br/><br/><i>可以对表单内容自定义的设置：dendrogram.form.settings</i><br/>
+         <br/>* settings结构为数组对象： [setting,setting,...]
+         <br/>* 输入框setting 普通对象：
+         <br/>* {    column:记录列明 必填,
+         <br/>*      label:输入框标签 选填,
+         <br/>*      type:输入框类型 选填,
+         <br/>*      attribute:输入框属性参数 选填,
+         <br/>*      options:当类setting的类型type为radio或者checkbox时的选项参数 选填
+         <br/>* }
+         <br/>*
+         <br/>* setting中 type类型：text textarea hidden disable radio checkbox 默认text
+         <br/>* options结构为数组对象 [] option为普通对象 {label:选项标签 必填,value:选项值 必填}
+            </td>
         </tr>
         <tr>
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>同上</b></td>
+            <td style="text-align:left;"><b>同上 可参考test目录下的expamle样例</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
