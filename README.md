@@ -33,7 +33,7 @@
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/select.png)
 
 ### 1.安装
-`composer require dendrogram/dendrogram:v2.0`
+`composer require dendrogram/dendrogram:v2.1`
 
 ### 2.配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
