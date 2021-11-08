@@ -111,7 +111,7 @@
         <tr>
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
-            <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
+            <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 [开发目录权限chmod -R 0777 vendor/dendrogram/]<br/><b>router</b>: 修改节点数据路由[POST方式] </td>
             <td style="text-align:left;"><b>同上 可参考test目录下的expamle样例</b></td>
         </tr>
         <tr>
