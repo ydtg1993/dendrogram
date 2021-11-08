@@ -72,7 +72,7 @@ html {
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: none;
     transition: .2s ease-in-out;
     transition-property: color, background-color, border-color
 }

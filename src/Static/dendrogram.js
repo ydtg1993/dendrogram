@@ -29,8 +29,19 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = xhr.responseText
-
+                    var response = xhr.responseText;
+                    if(form.conserve_action == 'delete'){
+                        var dom = form.nodeElement;
+                        dendrogram.removeChildrenDom(dom);
+                        dom.parentNode.removeChild(dom)
+                        return
+                    }
+                    if(form.conserve_action == 'update'){
+                        var dom = form.nodeElement;
+                        dom.setAttribute('data-v',JSON.stringify(params));
+                        dom.children[1].children[0].innerText = params.name
+                        form.mongolia(false);
+                    }
                 }
             };
 
@@ -188,6 +199,12 @@
                     var type = setting.type ? setting.type : 'text';
                     var attribute = setting.attribute ? setting.attribute : '';
                     var options = setting.options ? setting.options : [];
+                    if(isAdd){
+                        value = '';
+                        if(column == 'id'){
+                            return;
+                        }
+                    }
                     form_content_html+= templateSelector(type,label, column, attribute,value,options);
                 });
 
@@ -237,6 +254,7 @@
                 }
             },
             addForm: function () {
+                dendrogram.form.conserve_action = 'add';
                 document.getElementById('dendrogram-form-theme').innerText = '增添节点';
                 var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
                 if (delete_buttun[0] instanceof HTMLElement) {
@@ -245,10 +263,10 @@
 
                 dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'),true);
                 dendrogram.form.nodeElement = this.parentNode;
-                dendrogram.form.conserve_action = 'add';
                 dendrogram.form.mongolia(true);
             },
             upForm: function () {
+                dendrogram.form.conserve_action = 'update';
                 document.getElementById('dendrogram-form-theme').innerText = '修改节点';
                 var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
                 if (delete_buttun[0] instanceof HTMLElement) {
@@ -257,7 +275,6 @@
 
                 dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'));
                 dendrogram.form.nodeElement = this.parentNode;
-                dendrogram.form.conserve_action = 'update';
                 dendrogram.form.mongolia(true);
             },
             conserve: function () {
