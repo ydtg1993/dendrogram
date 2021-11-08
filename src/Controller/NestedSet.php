@@ -175,7 +175,13 @@ EOF;
         if ($action == 'add' && isset($data['p_id'])) {
             return NestedSetModel::add($data);
         } elseif ($action == 'update' && isset($data['id'])) {
-            return NestedSetModel::where('id', $data['id'])->update($data);
+            $id = $data['id'];
+            unset($data['id']);
+            $dir = __DIR__ . '/../../cache/';
+            file_exists($dir."NestedSet-Horizontal-{$id}") && @unlink($dir."NestedSet-Horizontal-{$id}");
+            file_exists($dir."NestedSet-Vertical-{$id}") && @unlink($dir."NestedSet-Vertical-{$id}");
+            file_exists($dir."NestedSet-Select-{$id}") && @unlink($dir."NestedSet-Select-{$id}");
+            return NestedSetModel::where('id', $id)->update($data);
         } elseif ($action == 'delete' && isset($data['id'])) {
             return NestedSetModel::deleteAll($data['id']);
         }
