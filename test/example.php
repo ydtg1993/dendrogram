@@ -17,12 +17,75 @@ class TestDendrogram
         /*数据类型可直接使用
         *AdjacencyList::class 或 NestedSet::class 进行切换
         */
-        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildHorizontal(1);
+        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildHorizontal(1,['name'],-1,'节点操作url');
+        /*如果没有传递router参数:节点操作url 视图不会有默认的修改,新增弹窗表单*/
+
+        /* 1.绑定事件到节点的标签tab,添加按钮grow：*/
+        /*dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法); */
+        /*dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法);*/
+/*
+    <script>
+        $(function() {
+            dendrogram.bindClassEnvent('dendrogram-tab','click',function(){
+                alert('触发点击标签按钮事件')
+            });
+
+            dendrogram.bindClassEnvent('dendrogram-grow','click',function(){
+                alert('触发点击增添按钮事件')
+            });
+        });
+    </script>
+*/
+
+        /* 2.传递router参数:节点操作url 可以对表单内容做基本的设置 dendrogram.form.settings*/
+        /*
+         * settings结构为数组对象 [setting,setting,...]
+         * 输入框setting为普通对象 {
+         *      column:'记录列明 必填',
+         *      label:'输入框标签 选填',
+         *      type:'输入框类型 选填',
+         *      attribute:'输入框属性参数 选填',
+         *      options:'当类setting的类型type为radio或者checkbox时的选项参数 选填'
+         * }
+         *
+         * setting中 type类型：text textarea hidden disable radio checkbox 默认text
+         * options结构为数组对象 [] option为普通对象 {label:'选项标签 必填',value:'选项值 必填'}
+         * */
+/*
+<script>
+    $(function() {
+        //配置表单内容设置
+        dendrogram.form.settings = [
+            {column:'id',label:'编号',type:"disable"},
+            {column:'name',label:'名称',type:'textarea',attribute:''},
+            {column:'layer',label:'层级',type:'checkbox',options:[{label:'顶级',value:0}, {label:'次级',value:1},{label:'三级',value:2}]},
+            {column:'sort',label:'排序'}
+        ];
+    });
+</script>
+*/
+
+        /**
+        <script>
+        $(function() {
+        //1.如果没有传router参数
+        dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);
+        //3.配置表单内容设置
+        dendrogram.form.settings = [
+            {column:'id',label:'编号',type:"disable"},
+            {column:'name',label:'名称',type:'textarea',attribute:''},
+            {column:'layer',label:'层级',type:'checkbox',options:[{label:'顶级',value:0}, {label:'次级',value:1},{label:'三级',value:2}]},
+            {column:'sort',label:'排序'}
+        ];
+
+        });
+        </script>
+         */
         exit;
     }
 
     /**
-     * 节点操作方法 路由POST方式
+     * 节点操作方法 POST方式
      */
     function operateHorizontal()
     {
@@ -47,7 +110,7 @@ class TestDendrogram
     }
 
     /**
-     * 节点操作方法 路由POST方式
+     * 节点操作方法 POST方式
      * 根茎视图
      */
     function operateVertical()

@@ -39,7 +39,7 @@
 
             xhr.send(JSON.stringify(data));
         },
-        bindClassEnvent: function (className, event, func) {
+        bindClassEvent: function (className, event, func) {
             var objs = document.getElementsByClassName(className);
             for (var i = 0; i < objs.length; i++) {
                 objs[i].addEventListener(event, func, false);
@@ -50,127 +50,27 @@
                 dom.removeChild(dom.firstChild);
             }
         },
-        appendChildDom: function (dom, html) {
-            dom.innerHTML = html;
-        },
         replaceChild: function (dom, html) {
             dendrogram.removeChildrenDom(dom);
-            console.log(html)
             dom.innerHTML = html;
-            //dendrogram.appendChildDom(dom, html);
         },
-        getInput: function (name) {
-            var elements = document.getElementsByName(name);
-            return elements[0];
+        sprint:function () {
+            let args = arguments,string = args[0];
+            for(let i = 1;i<args.length;i++){
+                let item = arguments[i];
+                string = string.replace('@s',item);
+            }
+            return string;
         },
         tree: {
-            id: 0,
-            conserve_action:'add',
-            form_action: '%s',
             switchAnimeFlag: false,
             switchAnimeErroNum: 0,
             init: function () {
-                dendrogram.bindClassEnvent('dendrogram-switch', 'click', dendrogram.tree.switch);
-                if(!this.form_action){
+                dendrogram.bindClassEvent('dendrogram-switch', 'click', dendrogram.tree.switch);
+                if(!dendrogram.form.form_action){
                     return
                 }
-                dendrogram.bindClassEnvent('dendrogram-tab', 'click', dendrogram.tree.upForm);
-                dendrogram.bindClassEnvent('dendrogram-grow', 'click', dendrogram.tree.addForm);
-                document.getElementById('mongolia').onclick = function () {
-                    dendrogram.tree.mongolia(false);
-                };
-                document.getElementById('dendrogram-form-close').onclick = function () {
-                    dendrogram.tree.mongolia(false);
-                };
-                dendrogram.bindClassEnvent('dendrogram-form-delete', 'click', dendrogram.tree.delete);
-                dendrogram.bindClassEnvent('dendrogram-form-conserve', 'click', dendrogram.tree.conserve);
-            },
-            mongolia: function (flag) {
-                if (flag) {
-                    document.getElementById('mongolia').setAttribute('style', 'display:block;opacity:1');
-                    setTimeout(function () {
-                        document.getElementById('dendrogram-form').setAttribute('style', 'visibility: visible;opacity:1');
-                    }, 0);
-                    return;
-                }
-                document.getElementById('mongolia').setAttribute('style', 'display:none;opacity:0');
-                document.getElementById('dendrogram-form').setAttribute('style', 'visibility: hidden;opacity:0');
-            },
-            addForm: function () {
-                dendrogram.tree.mongolia(true);
-                document.getElementById('dendrogram-form-theme').innerText = '增加节点';
-                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
-                if (delete_buttun[0] instanceof HTMLElement) {
-                    delete_buttun[0].setAttribute('style', 'display:none;');
-                }
-
-                var data = this.parentNode.getAttribute('data-v');
-                var data = JSON.parse(data);
-                for (var name in data) {
-                    var item = dendrogram.getInput(data[name]);
-                    if ((item instanceof HTMLElement) == false) {
-                        continue;
-                    }
-                    if(typeof(data[name]) == "number"){
-                        item.value = 0;
-                    }else {
-                        item.value = '';
-                    }
-                    item.placeholder = name;
-                }
-                dendrogram.tree.id = data.id;
-                dendrogram.tree.conserve_action = 'add';
-            },
-            upForm: function () {
-                dendrogram.tree.mongolia(true);
-                document.getElementById('dendrogram-form-theme').innerText = '修改节点';
-                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
-                if (delete_buttun[0] instanceof HTMLElement) {
-                    delete_buttun[0].setAttribute('style', 'display:inline-block;');
-                }
-
-                var data = this.parentNode.getAttribute('data-v');
-                var data = JSON.parse(data);
-                for (var name in data) {
-                    var item = dendrogram.getInput(name);
-                    if ((item instanceof HTMLElement) == false) {
-                        continue;
-                    }
-                    if (data.hasOwnProperty(name)) {
-                        item.value = data[name];
-                    } else {
-                        item.placeholder = name;
-                    }
-                }
-                dendrogram.tree.id = data.id;
-                dendrogram.tree.conserve_action = 'update';
-            },
-            conserve: function () {
-                var elements = document.getElementsByTagName('input');
-
-                if (dendrogram.tree.conserve_action === 'add') {
-                    var data = {'p_id':dendrogram.tree.id};
-                }else {
-                    var data = {'id':dendrogram.tree.id};
-                }
-                for (var element in elements) {
-                    if (elements[element] instanceof HTMLElement && elements[element].className == 'dendrogram-input') {
-                        var name = elements[element].name;
-                        var val = elements[element].value;
-                        data[name] = val;
-                    }
-                }
-
-                dendrogram.requestEvent(dendrogram.tree.form_action, {
-                    'data': data,
-                    'action': dendrogram.tree.conserve_action
-                });
-            },
-            delete: function () {
-                dendrogram.requestEvent(dendrogram.tree.form_action, {
-                    'data': {'id': dendrogram.tree.id},
-                    'action': 'delete'
-                })
+                dendrogram.form.init();
             },
             switch: function () {
                 var node = this.parentNode;
@@ -211,6 +111,177 @@
                     dendrogram.tree.switchAnimeErroNum = 0;
                 }, false);
             }
+        },
+        form:{
+            settings:[],
+            conserve_action:'add',
+            form_action: '%s',
+            formContentTemplate:{
+                input:'<div class="dendrogram-form-preference"><label>@s<\/label><input class="dendrogram-input" name="@s" value="@s" @s><\/div>',
+                textarea:'<div class="dendrogram-form-preference"><label>@s<\/label><textarea class="dendrogram-textarea" rows="3" name="@s" @s\/>@s<\/textarea><\/div>',
+                radio:'<label><input class="dendrogram-radio" type="radio" name="@s" @s> @s<\/label>',
+                checkbox:'<label><input class="dendrogram-checkbox" type="checkbox" name="@s" @s> @s<\/label>'
+            },
+            init:function(){
+                dendrogram.bindClassEvent('dendrogram-tab', 'click', dendrogram.form.upForm);
+                dendrogram.bindClassEvent('dendrogram-grow', 'click', dendrogram.form.addForm);
+                document.getElementById('mongolia').onclick = function () {
+                    dendrogram.form.mongolia(false);
+                };
+                document.getElementById('dendrogram-form-close').onclick = function () {
+                    dendrogram.form.mongolia(false);
+                };
+                dendrogram.bindClassEvent('dendrogram-form-delete', 'click', dendrogram.form.delete);
+                dendrogram.bindClassEvent('dendrogram-form-conserve', 'click', dendrogram.form.conserve);
+            },
+            mongolia: function (flag) {
+                if (flag) {
+                    document.getElementById('mongolia').setAttribute('style', 'display:block;opacity:1');
+                    setTimeout(function () {
+                        document.getElementById('dendrogram-form').setAttribute('style', 'visibility: visible;opacity:1');
+                    }, 0);
+                    return;
+                }
+                document.getElementById('mongolia').setAttribute('style', 'display:none;opacity:0');
+                document.getElementById('dendrogram-form').setAttribute('style', 'visibility: hidden;opacity:0');
+            },
+            initFormContent:function(data,isAdd = false){
+                var data = JSON.parse(data);
+                document.getElementById('dendrogram-form-body').innerHTML = '';
+                var form_content_html = '';
+                if(!Array.isArray(dendrogram.form.settings) || (dendrogram.form.settings.length == 0)){
+                    //default
+                    for(let key in data){
+                        if(isAdd){
+                            if (key == 'id'){
+                                var template = dendrogram.sprint(dendrogram.form.formContentTemplate.input, key, key, data.key, 'disabled');
+                                form_content_html+= template;
+                                continue;
+                            }
+                            var template = dendrogram.sprint(dendrogram.form.formContentTemplate.input, key, key, '', '');
+                            form_content_html+= template;
+                            continue;
+                        }
+                        var template = dendrogram.sprint(dendrogram.form.formContentTemplate.input, key, key, data.key, '', '');
+                        form_content_html+= template;
+                    }
+                    document.getElementById('dendrogram-form-body').innerHTML = form_content_html;
+                }
+
+                dendrogram.form.settings.forEach((setting) => {
+                    if(!setting.column){
+                        return;
+                    }
+                    var column = setting.column;
+                    if(!data.hasOwnProperty(column)){
+                        return;
+                    }
+                    for (let k in data){
+                        data[k] = data[k].toString()
+                    }
+                    var label = setting.label ? setting.label : column;
+                    var defaultValue = data[column] ? data[column] : '';
+                    var value = setting.value ? setting.value : defaultValue;
+                    var type = setting.type ? setting.type : 'text';
+                    var attribute = setting.attribute ? setting.attribute : '';
+                    var options = setting.options ? setting.options : [];
+                    form_content_html+= templateSelector(type,label, column, attribute,value,options);
+                });
+
+                document.getElementById('dendrogram-form-body').innerHTML = form_content_html;
+                function templateSelector(type,label, column, attribute,value,options) {
+                    switch (type) {
+                        case "textarea":
+                            return dendrogram.sprint(dendrogram.form.formContentTemplate.textarea, label, column, attribute,value);
+                        case "radio":
+                            var template = '';
+                            for(let k in options){
+                                var option = options[k];
+                                if(!option.hasOwnProperty('label') || !option.hasOwnProperty('value')){
+                                    continue;
+                                }
+                                if (option.value == value){
+                                    template += dendrogram.sprint(dendrogram.form.formContentTemplate.radio, option.value, 'checked '+attribute,option.label);
+                                    continue;
+                                }
+                                template += dendrogram.sprint(dendrogram.form.formContentTemplate.radio, option.value, attribute,option.label);
+                            }
+                            return '<div class="dendrogram-form-preference"><label style="display: block;">选择<\/label>'+template+'<\/div>';
+                        case "checkbox":
+                            value = value.toString();
+                            var template = '';
+                            for(let k in options){
+                                var option = options[k];
+                                if(!option.hasOwnProperty('label') || !option.hasOwnProperty('value')){
+                                    continue;
+                                }
+                                var values = value.split(",");
+                                if (values.indexOf(option.value.toString()) != -1){
+                                    template += dendrogram.sprint(dendrogram.form.formContentTemplate.checkbox, option.value, 'checked '+attribute,option.label);
+                                    continue;
+                                }
+                                template += dendrogram.sprint(dendrogram.form.formContentTemplate.checkbox, option.value, attribute,option.label);
+                            }
+                            return '<div class="dendrogram-form-preference"><label style="display: block;">选择<\/label>'+template+'<\/div>';
+                        case "disable":
+                            return dendrogram.sprint(dendrogram.form.formContentTemplate.input, label, column, value, 'disabled');
+                        case "hidden":
+                            var input = '<div><input class="dendrogram-input" name="@s" value="@s" type="hidden"><\/div>';
+                            return dendrogram.sprint(input, label, column, value, 'type=disabled');
+                        default:
+                            return dendrogram.sprint(dendrogram.form.formContentTemplate.input, label, column, value, attribute);
+                    }
+                }
+            },
+            addForm: function () {
+                document.getElementById('dendrogram-form-theme').innerText = '增添节点';
+                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
+                if (delete_buttun[0] instanceof HTMLElement) {
+                    delete_buttun[0].setAttribute('style', 'display:none;');
+                }
+
+                dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'),true);
+                dendrogram.form.conserve_action = 'add';
+                dendrogram.form.mongolia(true);
+            },
+            upForm: function () {
+                document.getElementById('dendrogram-form-theme').innerText = '修改节点';
+                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
+                if (delete_buttun[0] instanceof HTMLElement) {
+                    delete_buttun[0].setAttribute('style', 'display:inline-block;');
+                }
+
+                dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'));
+                dendrogram.form.conserve_action = 'update';
+                dendrogram.form.mongolia(true);
+            },
+            conserve: function () {
+                var elements = document.getElementsByTagName('input');
+
+                if (dendrogram.form.conserve_action === 'add') {
+                    var data = {'p_id':dendrogram.form.id};
+                }else {
+                    var data = {'id':dendrogram.form.id};
+                }
+                for (var element in elements) {
+                    if (elements[element] instanceof HTMLElement && elements[element].className == 'dendrogram-input') {
+                        var name = elements[element].name;
+                        var val = elements[element].value;
+                        data[name] = val;
+                    }
+                }
+
+                dendrogram.requestEvent(dendrogram.form.form_action, {
+                    'data': data,
+                    'action': dendrogram.form.conserve_action
+                });
+            },
+            delete: function () {
+                dendrogram.requestEvent(dendrogram.form.form_action, {
+                    'data': {'id': dendrogram.tree.id},
+                    'action': 'delete'
+                })
+            },
         }
     };
 
