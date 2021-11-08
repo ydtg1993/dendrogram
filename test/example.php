@@ -41,7 +41,7 @@ class TestDendrogram
         /*
          * settings结构为数组对象 [setting,setting,...]
          * 输入框setting为普通对象 {
-         *      column:'记录列明 必填',
+         *      column:'记录字段 必填',
          *      label:'输入框标签 选填',
          *      type:'输入框类型 选填',
          *      attribute:'输入框属性参数 选填',
@@ -50,6 +50,7 @@ class TestDendrogram
          *
          * setting中 type类型：text textarea hidden disable radio checkbox 默认text
          * options结构为数组对象 [] option为普通对象 {label:'选项标签 必填',value:'选项值 必填'}
+         * 多选checkbox的值以逗号为分割(仅支持字符串字段类型) 例如:选项1,选项2,...
          * */
 /*
 <script>

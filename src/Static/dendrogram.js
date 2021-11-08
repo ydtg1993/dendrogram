@@ -9,13 +9,10 @@
             grow: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"></line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"><\/line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"><\/circle><\/svg>',
             ban: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"><\/circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"><\/line><\/svg>'
         },
-        requestEvent: function (url, params, method, callback) {
+        requestEvent: function (url, params,form) {
             if(!url){
                 return;
             }
-            method = typeof method !== 'undefined' ? method : 'POST';
-            callback = typeof callback == 'function' ? callback : function (d) {
-            };
 
             var xhr = null;
             if (window.ActiveXObject) {
@@ -23,23 +20,22 @@
             } else if (window.XMLHttpRequest) {
                 xhr = new XMLHttpRequest();
             }
-
             if (xhr == null) {
                 return;
             }
-            xhr.open(method, url, true);
-            if (method == 'POST') {
-                xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-                xhr.setRequestHeader('Cache-Control', 'no-cache');
-            }
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.setRequestHeader('Cache-Control', 'no-cache');
+
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    callback(xhr.responseText);
+                    var response = xhr.responseText
+
                 }
             };
+
             var formData = new FormData();
-            formData.append('action',params.action)
-            var params = params.data
+            formData.append('action',form.conserve_action)
             for(let k in params){
                 formData.append('data['+k+']',params[k]);
             }
@@ -120,6 +116,7 @@
         },
         form:{
             id:0,
+            nodeElement:'',
             settings:[],
             conserve_action:'add',
             form_action: '%s',
@@ -247,6 +244,7 @@
                 }
 
                 dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'),true);
+                dendrogram.form.nodeElement = this.parentNode;
                 dendrogram.form.conserve_action = 'add';
                 dendrogram.form.mongolia(true);
             },
@@ -258,6 +256,7 @@
                 }
 
                 dendrogram.form.initFormContent(this.parentNode.getAttribute('data-v'));
+                dendrogram.form.nodeElement = this.parentNode;
                 dendrogram.form.conserve_action = 'update';
                 dendrogram.form.mongolia(true);
             },
@@ -273,10 +272,7 @@
                 data = insert_select_data(document.getElementsByClassName('dendrogram-radio'),data);
                 data = insert_select_data(document.getElementsByClassName('dendrogram-checkbox'),data);
 
-                dendrogram.requestEvent(dendrogram.form.form_action, {
-                    'data': data,
-                    'action': dendrogram.form.conserve_action
-                });
+                dendrogram.requestEvent(dendrogram.form.form_action, data,dendrogram.form);
                 function insert_input_data(elements,data){
                     for (var element in elements) {
                         if (elements[element] instanceof HTMLElement) {
@@ -314,10 +310,8 @@
                 }
             },
             delete: function () {
-                dendrogram.requestEvent(dendrogram.form.form_action, {
-                    'data': {'id': dendrogram.form.id},
-                    'action': 'delete'
-                })
+                dendrogram.form.conserve_action = 'delete';
+                dendrogram.requestEvent(dendrogram.form.form_action, {id:dendrogram.form.id},dendrogram.form)
             },
         }
     };

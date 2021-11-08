@@ -196,6 +196,13 @@ EOF;
      */
     public function operateNode($action, $data)
     {
+        $dir = __DIR__ . '/../../cache/';
+        foreach (scandir($dir) as $file){
+            if(preg_match('/^AdjacencyList-/',$file)){
+                @unlink($dir.$file);
+            }
+        }
+
         if ($action == 'add') {
             $parent = AdjacencyListModel::where('id', $data['p_id'])->first();
             if (!$parent) {
@@ -207,10 +214,6 @@ EOF;
         } elseif ($action == 'update' && isset($data['id'])) {
             $id = $data['id'];
             unset($data['id']);
-            $dir = __DIR__ . '/../../cache/';
-            file_exists($dir."AdjacencyList-Horizontal-{$id}") && @unlink($dir."AdjacencyList-Horizontal-{$id}");
-            file_exists($dir."AdjacencyList-Vertical-{$id}") && @unlink($dir."AdjacencyList-Vertical-{$id}");
-            file_exists($dir."AdjacencyList-Select-{$id}") && @unlink($dir."AdjacencyList-Select-{$id}");
             return AdjacencyListModel::where('id', $id)->update($data);
         } elseif ($action == 'delete' && isset($data['id'])) {
             return AdjacencyListModel::deleteAll($data['id']);
