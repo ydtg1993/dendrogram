@@ -94,7 +94,7 @@
         <tr>
             <td style="text-align:left;">buildHorizontal</td>
             <td style="text-align:left;">生成横向视图</td>
-            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>文件缓存需要开启目录权限chmod -R 0777 vendor/dendrogram/</b><br/><b>router</b>: 修改节点数据路由[POST方式] </td>
+            <td style="text-align:left;"><b>id</b>:根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b><i>文件缓存需要开启目录权限chmod -R 0777 vendor/dendrogram/</i></b><br/><b>router</b>: 修改节点数据路由[POST方式] </td>
             <td style="text-align:left;"><b>html文本</b></br><i>如果没有传递router路由参数不会自动绑定点击节点修改,增加按钮时的弹窗表单</i>
         <hr/>自定义js代码块</br>
         <i>1.<b>绑定事件到节点的标签tab,添加按钮grow</b>：dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法)</br> dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法)</i><br/><br/>
