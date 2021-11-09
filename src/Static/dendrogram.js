@@ -182,24 +182,19 @@
                     children.setAttribute('style', 'display:block');
                     children.classList.remove('dendrogram-animation-reverse');
                     children.classList.add('dendrogram-animation-slide-top-small');
+                    dendrogram.tree.shrinkAnimeFlag = false;
                 } else {//shut
                     dendrogram.replaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
                     children.classList.remove('dendrogram-animation-slide-top-small');
-                    var t = setTimeout(function () {
+                    setTimeout(function () {
                         children.classList.add('dendrogram-animation-reverse');
+                        setTimeout(function () {
+                            children.setAttribute('style', 'display:none');
+                            dendrogram.tree.shrinkAnimeFlag = false;
+                        }, 100);
                     }, 0);
                 }
-
-                children.addEventListener('animationend', function callback() {
-                    if (sign == 1) {
-                        children.setAttribute('style', 'display:none');
-                        clearTimeout(t);
-                    }
-                    children.removeEventListener('animationend', callback);
-                    dendrogram.tree.shrinkAnimeFlag = false;
-                    dendrogram.tree.switchAnimeErroNum = 0;
-                }, false);
             }
         },
         form:{
