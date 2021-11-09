@@ -96,6 +96,7 @@ class TestDendrogram
          *数据结构要保持与创建时一致
          */
         $result = (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->operateNode($action, $data);
+        /*返回json*/
         return json_encode($result);
     }
 
