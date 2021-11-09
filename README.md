@@ -141,9 +141,7 @@
     </tbody>
 </table>
 
-```
-可参考test目录下面的测试样例
-```
+[更多参考测试样例](https://github.com/ydtg1993/dendrogram/blob/master/test/example.php)
 
 ##### 获取数据
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
