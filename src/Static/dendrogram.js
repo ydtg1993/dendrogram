@@ -74,7 +74,7 @@
                         addNode.addEventListener('click',dendrogram.form.addForm);
 
                         var li = dendrogram.form.nodeElement.parentElement;
-                        var liNode = document.createElement('li')
+                        var liNode = document.createElement('li');
                         var divNode = document.createElement('div');
                         divNode.innerHTML = '<a href="javascript:void(0);" class="dendrogram-ban">'+dendrogram.icon_data.ban+'<\/a>';
                         if(dendrogram.form.nodeElement.className == 'dendrogram-horizontal-node'){
@@ -108,7 +108,7 @@
                         dendrogram.form.nodeElement.removeChild(dendrogram.form.nodeElement.firstElementChild);
                         var switchNode = document.createElement('a');
                         switchNode.className = 'dendrogram-switch';
-                        switchNode.setAttribute('href','javascript:void(0);')
+                        switchNode.setAttribute('href','javascript:void(0);');
                         switchNode.addEventListener('click',dendrogram.tree.switch);
                         switchNode.innerHTML = dendrogram.icon_data.shrink;
                         dendrogram.form.nodeElement.prepend(switchNode);
