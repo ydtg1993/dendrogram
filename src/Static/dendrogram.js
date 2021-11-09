@@ -77,7 +77,8 @@
                         }else {
                             divNode.className = 'dendrogram-vertical-branch';
                         }
-                        divNode.setAttribute('data-sign','1');
+                        dendrogram.form.nodeElement.setAttribute('data-sign','1');
+                        divNode.setAttribute('data-sign','0');
                         params['id'] = parseInt(response);
                         divNode.setAttribute('data-v',JSON.stringify(params));
                         divNode.append(tabNode);
@@ -91,7 +92,6 @@
                             li.append(ulNode)
                         }else {
                             var ulNode = dendrogram.form.nodeElement.nextElementSibling
-                            dendrogram.form.nodeElement.setAttribute('data-sign','1');
                             ulNode.setAttribute('style', 'display:block');
                             ulNode.append(liNode)
                         }
