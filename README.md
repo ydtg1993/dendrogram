@@ -130,7 +130,7 @@
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
             <td style="text-align:left;"><b>action</b>: 增删改标识 [添加记录:add 修改: update 删除: delete]<br/><b>data</b>: 修改节点记录的传参[post方式]</td>
-    <td style="text-align:left;"><b>boolean</b></td>
+    <td style="text-align:left;"><b>新增返回id 修改删除返回bool 返回的result用json输出到客户端</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">getTreeData</td>
