@@ -36,9 +36,9 @@
                     dendrogram.requestFlag = false;
                     var response = xhr.responseText;
                     if(dendrogram.form.conserve_action == 'delete'){
-                        var li = dendrogram.form.nodeElement.parentElement
+                        var li = dendrogram.form.nodeElement.parentElement;
                         if(dendrogram.checkNodeNum('LI',li.parentNode) > 1) {
-                            li.parentNode.removeChild(li)
+                            li.parentNode.removeChild(li);
                             dendrogram.form.mongolia(false);
                             return;
                         }
@@ -46,9 +46,9 @@
                         parentNode.removeChild(parentNode.firstElementChild);
                         var banNode = document.createElement('a');
                         banNode.className = 'dendrogram-ban';
-                        banNode.setAttribute('href','javascript:void(0);')
+                        banNode.setAttribute('href','javascript:void(0);');
                         banNode.innerHTML = dendrogram.icon_data.ban;
-                        parentNode.prepend(banNode)
+                        parentNode.prepend(banNode);
 
                         li.parentElement.parentElement.removeChild(li.parentElement);
                         dendrogram.form.mongolia(false);
@@ -66,14 +66,14 @@
                         tabNode.className = 'dendrogram-tab';
                         tabNode.setAttribute('href', 'javascript:void(0);');
                         tabNode.innerHTML = '<div class="text">'+params.name+'<\/div>';
-                        tabNode.addEventListener('click',dendrogram.form.upForm)
+                        tabNode.addEventListener('click',dendrogram.form.upForm);
                         var addNode = document.createElement('a');
                         addNode.className = 'dendrogram-grow';
-                        addNode.setAttribute('href','#form');
+                        addNode.setAttribute('href','javascript:void(0);');
                         addNode.innerHTML = dendrogram.icon_data.grow;
-                        addNode.addEventListener('click',dendrogram.form.addForm)
+                        addNode.addEventListener('click',dendrogram.form.addForm);
 
-                        var li = dendrogram.form.nodeElement.parentElement
+                        var li = dendrogram.form.nodeElement.parentElement;
                         var liNode = document.createElement('li')
                         var divNode = document.createElement('div');
                         divNode.innerHTML = '<a href="javascript:void(0);" class="dendrogram-ban">'+dendrogram.icon_data.ban+'<\/a>';
@@ -88,24 +88,28 @@
                         divNode.setAttribute('data-v',JSON.stringify(params));
                         divNode.append(tabNode);
                         divNode.append(addNode);
-                        liNode.append(divNode)
+                        liNode.append(divNode);
                         if(dendrogram.checkNodeNum('UL',dendrogram.form.nodeElement.parentNode) == 0){
                             var ulNode = document.createElement('ul');
-                            ulNode.className = 'dendrogram-animation-slide-top-small';
+                            if(dendrogram.form.nodeElement.className == 'dendrogram-horizontal-node'){
+                                ulNode.className = 'dendrogram dendrogram-horizontal-branch dendrogram-animation-slide-top-small';
+                            }else {
+                                ulNode.className = 'dendrogram-animation-slide-top-small';
+                            }
                             ulNode.setAttribute('style', 'display:block');
-                            ulNode.append(liNode)
-                            li.append(ulNode)
+                            ulNode.append(liNode);
+                            li.append(ulNode);
                         }else {
-                            var ulNode = dendrogram.form.nodeElement.nextElementSibling
+                            var ulNode = dendrogram.form.nodeElement.nextElementSibling;
                             ulNode.setAttribute('style', 'display:block');
-                            ulNode.append(liNode)
+                            ulNode.append(liNode);
                         }
 
                         dendrogram.form.nodeElement.removeChild(dendrogram.form.nodeElement.firstElementChild);
                         var switchNode = document.createElement('a');
                         switchNode.className = 'dendrogram-switch';
                         switchNode.setAttribute('href','javascript:void(0);')
-                        switchNode.addEventListener('click',dendrogram.tree.switch)
+                        switchNode.addEventListener('click',dendrogram.tree.switch);
                         switchNode.innerHTML = dendrogram.icon_data.shrink;
                         dendrogram.form.nodeElement.prepend(switchNode);
                         dendrogram.form.mongolia(false);
@@ -115,12 +119,12 @@
                 }
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200) {
                     dendrogram.requestFlag = false;
-                    alert('后台接口出错 错误码: ' + xhr.status)
+                    alert('后台接口出错 错误码: ' + xhr.status);
                 }
             };
 
             var formData = new FormData();
-            formData.append('action',dendrogram.form.conserve_action)
+            formData.append('action',dendrogram.form.conserve_action);
             for(let k in params){
                 formData.append('data['+k+']',params[k]);
             }
@@ -153,7 +157,7 @@
             var I = 0;
             for (let k in node.childNodes){
                 if(node.childNodes[k].nodeName == tag){
-                    I++
+                    I++;
                 }
             }
             return I;
@@ -410,6 +414,7 @@
             },
         }
     };
+
 
     if (typeof define === 'function' && define.amd) {
         // AMD
