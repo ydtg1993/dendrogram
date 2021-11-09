@@ -15,6 +15,7 @@
         4.视图路由参数router变更为非必要  传递router路由参数视图会自动绑定点击节点修改,增加按钮时的弹窗表单
         5.可绑定的按钮事件 节点标签按钮dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法) 节点新增按钮dendrogram.bindClassEnvent('dendrogram-grow',事件,回调方法)
         6.弹窗增加可自定义配置项dendrogram.form.settings 
+        7.无刷新的视图增删改节点操作 修复多种视图bug
 <table> 
     <tr>
         <th style="text-align:center;">数据结构</th>
