@@ -95,7 +95,8 @@ class TestDendrogram
         /**
          *数据结构要保持与创建时一致
          */
-        (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->operateNode($action, $data);
+        $result = (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->operateNode($action, $data);
+        return json_encode($result);
     }
 
     /**
@@ -108,17 +109,6 @@ class TestDendrogram
         */
         echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->buildVertical(1);
         exit;
-    }
-
-    /**
-     * 节点操作方法 POST方式
-     * 根茎视图
-     */
-    function operateVertical()
-    {
-        $action = $_POST['action'];
-        $data = $_POST['data'];
-        (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\NestedSet::class))->operateNode($action, $data);
     }
 
     /**

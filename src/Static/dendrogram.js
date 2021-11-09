@@ -6,10 +6,10 @@
         icon_data: {
             expand: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"><\/circle> <line fill="none" stroke="#fff" x1="9.5" y1="5" x2="9.5" y2="14"><\/line> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"><\/line><\/svg>',
             shrink: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"><\/circle> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"><\/line><\/svg>',
-            grow: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"></line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"><\/line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"><\/circle><\/svg>',
+            grow: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"><\/line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"><\/line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"><\/circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"><\/circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"><\/circle><\/svg>',
             ban: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"><\/circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"><\/line><\/svg>'
         },
-        requestEvent: function (url, params,form) {
+        requestEvent: function (url, params) {
             if(!url){
                 return;
             }
@@ -28,25 +28,89 @@
             xhr.setRequestHeader('Cache-Control', 'no-cache');
 
             xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status == 200) {
                     var response = xhr.responseText;
-                    if(form.conserve_action == 'delete'){
-                        var dom = form.nodeElement;
-                        dendrogram.removeChildrenDom(dom);
-                        dom.parentNode.removeChild(dom)
-                        return
+                    if(dendrogram.form.conserve_action == 'delete'){
+                        var li = dendrogram.form.nodeElement.parentElement
+                        if(dendrogram.checkNodeNum('LI',li.parentNode) > 1) {
+                            li.parentNode.removeChild(li)
+                            dendrogram.form.mongolia(false);
+                            return;
+                        }
+                        var parentNode = dendrogram.form.nodeElement.parentElement.parentElement.previousElementSibling;
+                        parentNode.removeChild(parentNode.firstElementChild);
+                        var banNode = document.createElement('a');
+                        banNode.className = 'dendrogram-ban';
+                        banNode.setAttribute('href','javascript:void(0);')
+                        banNode.innerHTML = dendrogram.icon_data.ban;
+                        parentNode.prepend(banNode)
+
+                        li.parentElement.parentElement.removeChild(li.parentElement);
+                        dendrogram.form.mongolia(false);
+                        return;
                     }
-                    if(form.conserve_action == 'update'){
-                        var dom = form.nodeElement;
+                    if(dendrogram.form.conserve_action == 'update'){
+                        var dom = dendrogram.form.nodeElement;
                         dom.setAttribute('data-v',JSON.stringify(params));
-                        dom.children[1].children[0].innerText = params.name
-                        form.mongolia(false);
+                        dom.children[1].children[0].innerText = params.name;
+                        dendrogram.form.mongolia(false);
+                        return;
                     }
+                    if(dendrogram.form.conserve_action == 'add'){
+                        var tabNode = document.createElement('button');
+                        tabNode.className = 'dendrogram-tab';
+                        tabNode.setAttribute('href', 'javascript:void(0);');
+                        tabNode.innerHTML = '<div class="text">'+params.name+'<\/div>';
+                        tabNode.addEventListener('click',dendrogram.form.upForm)
+                        var addNode = document.createElement('a');
+                        addNode.className = 'dendrogram-grow';
+                        addNode.setAttribute('href','#form');
+                        addNode.innerHTML = dendrogram.icon_data.grow;
+                        addNode.addEventListener('click',dendrogram.form.addForm)
+
+                        var li = dendrogram.form.nodeElement.parentElement
+                        var liNode = document.createElement('li')
+                        var divNode = document.createElement('div');
+                        divNode.innerHTML = '<a href="javascript:void(0);" class="dendrogram-ban">'+dendrogram.icon_data.ban+'<\/a>';
+                        divNode.className = 'dendrogram-vertical-branch';
+                        divNode.setAttribute('data-sign','1');
+                        params['id'] = parseInt(response);
+                        divNode.setAttribute('data-v',JSON.stringify(params));
+                        divNode.append(tabNode);
+                        divNode.append(addNode);
+                        liNode.append(divNode)
+                        if(dendrogram.checkNodeNum('UL',dendrogram.form.nodeElement.parentNode) == 0){
+                            var ulNode = document.createElement('ul');
+                            ulNode.className = 'dendrogram-animation-slide-top-small';
+                            ulNode.setAttribute('style', 'display:block');
+                            ulNode.append(liNode)
+                            li.append(ulNode)
+                        }else {
+                            var ulNode = dendrogram.form.nodeElement.nextElementSibling
+                            dendrogram.form.nodeElement.setAttribute('data-sign','1');
+                            ulNode.setAttribute('style', 'display:block');
+                            ulNode.append(liNode)
+                        }
+
+                        dendrogram.form.nodeElement.removeChild(dendrogram.form.nodeElement.firstElementChild);
+                        var switchNode = document.createElement('a');
+                        switchNode.className = 'dendrogram-switch';
+                        switchNode.setAttribute('href','javascript:void(0);')
+                        switchNode.addEventListener('click',dendrogram.tree.switch)
+                        switchNode.innerHTML = dendrogram.icon_data.shrink;
+                        dendrogram.form.nodeElement.prepend(switchNode);
+                        dendrogram.form.mongolia(false);
+                        return;
+                    }
+                    return;
+                }
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200) {
+                    alert('后台接口出错 错误码: ' + xhr.status)
                 }
             };
 
             var formData = new FormData();
-            formData.append('action',form.conserve_action)
+            formData.append('action',dendrogram.form.conserve_action)
             for(let k in params){
                 formData.append('data['+k+']',params[k]);
             }
@@ -75,6 +139,15 @@
             }
             return string;
         },
+        checkNodeNum:function(tag,node){
+            var I = 0;
+            for (let k in node.childNodes){
+                if(node.childNodes[k].nodeName == tag){
+                    I++
+                }
+            }
+            return I;
+        },
         tree: {
             switchAnimeFlag: false,
             switchAnimeErroNum: 0,
@@ -88,7 +161,7 @@
             switch: function () {
                 var node = this.parentNode;
                 var sign = node.getAttribute('data-sign');
-                var children = node.parentNode.childNodes[3];
+                var children = node.nextElementSibling;
 
                 if (dendrogram.tree.shrinkAnimeFlag) {
                     if (dendrogram.tree.switchAnimeErroNum > 3) {
@@ -133,7 +206,7 @@
             form_action: '%s',
             formContentTemplate:{
                 input:'<div class="dendrogram-form-preference"><label>@s<\/label><input class="dendrogram-input" name="@s" value="@s" @s><\/div>',
-                textarea:'<div class="dendrogram-form-preference"><label>@s<\/label><textarea class="dendrogram-textarea" rows="3" name="@s" @s\/>@s<\/textarea><\/div>',
+                textarea:'<div class="dendrogram-form-preference"><label>@s<\/label><textarea class="dendrogram-textarea" rows="3" name="@s" @s>@s<\/textarea><\/div>',
                 radio:'<label><input class="dendrogram-radio" type="radio" name="@s" value="@s" @s> @s<\/label>',
                 checkbox:'<label><input class="dendrogram-checkbox" type="checkbox" name="@s" value="@s" @s> @s<\/label>'
             },
@@ -289,7 +362,7 @@
                 data = insert_select_data(document.getElementsByClassName('dendrogram-radio'),data);
                 data = insert_select_data(document.getElementsByClassName('dendrogram-checkbox'),data);
 
-                dendrogram.requestEvent(dendrogram.form.form_action, data,dendrogram.form);
+                dendrogram.requestEvent(dendrogram.form.form_action, data);
                 function insert_input_data(elements,data){
                     for (var element in elements) {
                         if (elements[element] instanceof HTMLElement) {
@@ -328,7 +401,7 @@
             },
             delete: function () {
                 dendrogram.form.conserve_action = 'delete';
-                dendrogram.requestEvent(dendrogram.form.form_action, {id:dendrogram.form.id},dendrogram.form)
+                dendrogram.requestEvent(dendrogram.form.form_action, {id:dendrogram.form.id})
             },
         }
     };

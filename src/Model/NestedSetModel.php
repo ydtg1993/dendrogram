@@ -65,7 +65,7 @@ class NestedSetModel extends Model
             return false;
         }
         DB::commit();
-        return true;
+        return $result;
     }
 
     public static function getChildren($id)
