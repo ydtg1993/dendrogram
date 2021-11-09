@@ -9,11 +9,15 @@
             grow: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"><\/line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"><\/line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"><\/circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"><\/circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"><\/circle><\/svg>',
             ban: '<svg class="dendrogram-icon" width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"><\/circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"><\/line><\/svg>'
         },
+        requestFlag:false,
         requestEvent: function (url, params) {
             if(!url){
                 return;
             }
-
+            if(dendrogram.requestFlag){
+                return;
+            }
+            dendrogram.requestFlag = true;
             var xhr = null;
             if (window.ActiveXObject) {
                 xhr = new ActiveXObject("Microsoft.XMLHTTP");
@@ -29,6 +33,7 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status == 200) {
+                    dendrogram.requestFlag = false;
                     var response = xhr.responseText;
                     if(dendrogram.form.conserve_action == 'delete'){
                         var li = dendrogram.form.nodeElement.parentElement
@@ -109,6 +114,7 @@
                     return;
                 }
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status != 200) {
+                    dendrogram.requestFlag = false;
                     alert('后台接口出错 错误码: ' + xhr.status)
                 }
             };
@@ -206,8 +212,8 @@
             formContentTemplate:{
                 input:'<div class="dendrogram-form-preference"><label>@s<\/label><input class="dendrogram-input" name="@s" value="@s" @s><\/div>',
                 textarea:'<div class="dendrogram-form-preference"><label>@s<\/label><textarea class="dendrogram-textarea" rows="3" name="@s" @s>@s<\/textarea><\/div>',
-                radio:'<label><input class="dendrogram-radio" type="radio" name="@s" value="@s" @s> @s<\/label>',
-                checkbox:'<label><input class="dendrogram-checkbox" type="checkbox" name="@s" value="@s" @s> @s<\/label>'
+                radio:'<label class="option_label"><input class="dendrogram-radio" type="radio" name="@s" value="@s" @s> @s<\/label>',
+                checkbox:'<label class="option_label"><input class="dendrogram-checkbox" type="checkbox" name="@s" value="@s" @s> @s<\/label>'
             },
             init:function(){
                 dendrogram.bindClassEvent('dendrogram-tab', 'click', dendrogram.form.upForm);

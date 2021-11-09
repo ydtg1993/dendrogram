@@ -1,13 +1,10 @@
-html {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 14px
-}
-
 .dendrogram {
     width: max-content
 }
 
 .dendrogram * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
     line-height: .5
 }
 
@@ -33,8 +30,9 @@ html {
     margin-right: 5px;
     display: inline-block;
     max-width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-weight: 700;
+    height: 14px;
 }
 
 .dendrogram .text {
@@ -471,6 +469,11 @@ html {
     border: 1px solid #ccc;
     transition: .2s ease-in-out;
     transition-property: background-color,border;
+}
+
+.option_label {
+    font-weight: 300!important;
+    font-size: 12px;
 }
 
 .dendrogram-radio:checked,.dendrogram-checkbox:checked {
