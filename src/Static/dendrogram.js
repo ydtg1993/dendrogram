@@ -72,7 +72,11 @@
                         var liNode = document.createElement('li')
                         var divNode = document.createElement('div');
                         divNode.innerHTML = '<a href="javascript:void(0);" class="dendrogram-ban">'+dendrogram.icon_data.ban+'<\/a>';
-                        divNode.className = 'dendrogram-vertical-branch';
+                        if(dendrogram.form.nodeElement.className == 'dendrogram-horizontal-node'){
+                            divNode.className = 'dendrogram-horizontal-node';
+                        }else {
+                            divNode.className = 'dendrogram-vertical-branch';
+                        }
                         divNode.setAttribute('data-sign','1');
                         params['id'] = parseInt(response);
                         divNode.setAttribute('data-v',JSON.stringify(params));
