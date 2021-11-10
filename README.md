@@ -1,4 +1,4 @@
-<h3 align="center">PHP系统树图</h3>
+<h3 align="center">PHP无限系统树图</h3>
 
 <p align="center">
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v2.0-orange.svg" alt="v2.0"></a>
