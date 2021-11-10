@@ -1,1 +1,118 @@
-!function(a){"use strict";var b={label:"%s",value:"%s",tag:'<svg style="vertical-align: middle;position: absolute;right:7px;top: 10px;" width="20" height="20"\nviewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="triangle-down">\n<polygon points="5 7 15 7 10 12"></polygon></svg>',"default":JSON.parse("%s"),storage:function(){var c,d,a=document.getElementById("dendrogram-unlimited-select"),b=[];for(c=0;c<a.childNodes.length;c++)d=a.childNodes[c].firstChild.valueOf().getAttribute("data-value"),b.push(d);return b},callback:function(){},create:function(a){var d,e,f,g,h,c=document.getElementById("dendrogram-unlimited-select");c&&(d=this.makeDropDown(a.children),d&&(e=document.createElement("div"),f=document.createElement("div"),f.className="dendrogram-select-button",f.innerHTML="<span>"+a.children[0][b.label]+"</span>"+this.tag,f.setAttribute("data-value",a.children[0][b.value]),g=0,b.default.length>0&&a.children.forEach(function(a,c){var d=b.default.indexOf(a["id"]);return-1!==d?(f.innerHTML="<span>"+a[b.label]+"</span>"+this.tag,f.setAttribute("data-value",a[b.value]),b.default.splice(d,1),g=c,void 0):void 0}),e.appendChild(f),h=document.createElement("div"),h.className="dendrogram-select-dropdown",h.appendChild(d),e.addEventListener("click",function(){h.style.setProperty("display","block")}),e.addEventListener("mouseleave",function(){h.style.setProperty("display","none")}),e.appendChild(h),c.appendChild(e),a.children[g].children.length>0&&b.create(a.children[g])))},makeDropDown:function(a){if(a.length<=0)return!1;var c=document.createElement("ul");return a.forEach(function(a){var e,d=document.createElement("li");d.innerText=a[b.label],d.setAttribute("data-option",a[b.value]),a.children.length<=0?d.addEventListener("click",function(){e(this),b.callback()}):d.addEventListener("click",function(){e(this),b.create(a),b.callback()}),e=function(c){var g,h,e=c.getAttribute("data-option"),f=d.parentNode.parentNode.parentNode.firstChild;f.firstChild.innerHTML="<span>"+a[b.label]+"<span>"+b.tag,f.valueOf().setAttribute("data-value",e);do{if(g=f.parentNode.nextSibling,!g)break;h=g.nextSibling,f.parentNode.parentNode.removeChild(f.parentNode.nextSibling)}while(h)},c.appendChild(d)}),c}};"function"==typeof define&&define.amd?define(b):a.dendrogramUS=b}(window);
+(function (window) {
+
+    'use strict';
+
+    var dendrogramUS = {
+        label:'%s',
+        value:'%s',
+        tag:"<svg style=\"vertical-align: middle;position: absolute;right:7px;top: 10px;\" width=\"20\" height=\"20\"\n" +
+            "viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\" data-svg=\"triangle-down\">\n" +
+            "<polygon points=\"5 7 15 7 10 12\"></polygon></svg>",
+        default:JSON.parse('%s'),
+        storage:function () {
+            var dom = document.getElementById('dendrogram-unlimited-select');
+            var storage = [];
+            for (var i = 0; i < dom.childNodes.length; i++) {
+                var value = dom.childNodes[i].firstChild.valueOf().getAttribute('data-value');
+                storage.push(value)
+            }
+            return storage;
+        },
+        callback:function(){
+
+        },
+        create: function (data) {
+            var dom = document.getElementById('dendrogram-unlimited-select');
+            if (!dom) {
+                return
+            }
+            var ulDom = this.makeDropDown(data.children);
+            if(!ulDom){
+                return;
+            }
+            var box = document.createElement('div');
+            var content = document.createElement('div');
+            content.className = "dendrogram-select-button";
+
+            content.innerHTML = '<span>'+data.children[0][dendrogramUS.label]+ '<\/span>'+ dendrogramUS.tag;
+            content.setAttribute('data-value',data.children[0][dendrogramUS.value]);
+            var currentChildIndex = 0;
+            if(dendrogramUS.default.length > 0){
+                data.children.forEach(function (d,k) {
+                    var index = dendrogramUS.default.indexOf(d['id']);
+                    if(index !== -1){
+                        content.innerHTML = '<span>'+d[dendrogramUS.label]+ '<\/span>'+ dendrogramUS.tag;
+                        content.setAttribute('data-value',d[dendrogramUS.value]);
+                        dendrogramUS.default.splice(index,1);
+                        currentChildIndex = k;
+                        return;
+                    }
+                })
+            }
+            box.appendChild(content);
+
+            var dropDownDom = document.createElement('div');
+            dropDownDom.className = "dendrogram-select-dropdown";
+            dropDownDom.appendChild(ulDom);
+
+            box.addEventListener("click",function () {
+                dropDownDom.style.setProperty('display','block');
+            });
+
+            box.addEventListener('mouseleave',function () {
+                dropDownDom.style.setProperty('display','none');
+            });
+            box.appendChild(dropDownDom);
+            dom.appendChild(box);
+            if(data.children[currentChildIndex].children.length > 0){
+                dendrogramUS.create(data.children[currentChildIndex])
+            }
+        },
+        makeDropDown:function (data) {
+            if(data.length <= 0){
+                return false;
+            }
+            var ulDom = document.createElement('ul');
+            data.forEach(function (child) {
+                var liDom = document.createElement('li');
+                liDom.innerText = child[dendrogramUS.label];
+                liDom.setAttribute('data-option',child[dendrogramUS.value]);
+                if(child.children.length <= 0){
+                    liDom.addEventListener('click',function () {
+                        bindEvent(this);
+                        dendrogramUS.callback();
+                    });
+                }else {
+                    liDom.addEventListener('click',function () {
+                        bindEvent(this);
+                        dendrogramUS.create(child);
+                        dendrogramUS.callback();
+                    });
+                }
+
+                var bindEvent = function(that){
+                    var option = that.getAttribute('data-option');
+                    var box = liDom.parentNode.parentNode.parentNode.firstChild;
+                    box.firstChild.textContent = child[dendrogramUS.label];
+                    box.valueOf().setAttribute('data-value',option);
+                    do {
+                        var sub = box.parentNode.nextSibling;
+                        if(!sub){
+                            break;
+                        }
+                        var nextSub = sub.nextSibling;
+                        box.parentNode.parentNode.removeChild(box.parentNode.nextSibling);
+                    }while (nextSub);
+                };
+                ulDom.appendChild(liDom)
+            });
+            return ulDom;
+        }
+    };
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(dendrogramUS);
+    } else {
+        window.dendrogramUS = dendrogramUS;
+    }
+})(window);
