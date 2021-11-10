@@ -117,7 +117,7 @@
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>同上 [参考示例]https://github.com/ydtg1993/dendrogram/blob/master/test/example.php</b></td>
+    <td style="text-align:left;"><b>同上 <a href='https://github.com/ydtg1993/dendrogram/blob/master/test/example.php'>[参考示例]</a></b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
@@ -136,13 +136,14 @@
             <td style="text-align:left;">getTreeData</td>
             <td style="text-align:left;">获取结构型数据</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>cache</b>: 缓存时间 [-1不缓存 0永久缓存 0>缓存n秒]</td>
-            <td style="text-align:left;"><b>array</b></td>
+    <td style="text-align:left;"><b>array</b></br>
+         结构参见下图 </td>
         </tr>
     </tbody>
 </table>
 
-[更多参考测试样例](https://github.com/ydtg1993/dendrogram/blob/master/test/example.php)
-
-##### 获取数据
+##### 获取数据示例
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
 
+
+[更多参考测试样例](https://github.com/ydtg1993/dendrogram/blob/master/test/example.php)
