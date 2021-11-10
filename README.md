@@ -1,4 +1,4 @@
-<h3 align="center">PHP系统树图</h3>
+<h3 align="center">PHP无限系统树图</h3>
 
 <p align="center">
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v2.0-orange.svg" alt="v2.0"></a>
@@ -117,7 +117,7 @@
             <td style="text-align:left;">buildVertical</td>
             <td style="text-align:left;">生成竖向视图</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>column</b>: 节点展示记录字段名<br/><b>cache</b>: 缓存时间 <br/><b>router</b>: 修改节点数据路由[POST方式] </td>
-            <td style="text-align:left;"><b>同上 可参考test目录下的expamle样例</b></td>
+    <td style="text-align:left;"><b>同上 <a href='https://github.com/ydtg1993/dendrogram/blob/master/test/example.php'>[参考示例]</a></b></td>
         </tr>
         <tr>
             <td style="text-align:left;">buildSelect</td>
@@ -130,21 +130,20 @@
             <td style="text-align:left;">operateNode</td>
             <td style="text-align:left;">节点操作</td>
             <td style="text-align:left;"><b>action</b>: 增删改标识 [添加记录:add 修改: update 删除: delete]<br/><b>data</b>: 修改节点记录的传参[post方式]</td>
-    <td style="text-align:left;"><b>boolean</b></td>
+    <td style="text-align:left;"><b>新增返回id 修改删除返回bool 返回的result用json输出到客户端</b></td>
         </tr>
         <tr>
             <td style="text-align:left;">getTreeData</td>
             <td style="text-align:left;">获取结构型数据</td>
             <td style="text-align:left;"><b>id</b>: 根节点id <br/><b>cache</b>: 缓存时间 [-1不缓存 0永久缓存 0>缓存n秒]</td>
-            <td style="text-align:left;"><b>array</b></td>
+    <td style="text-align:left;"><b>array</b></br>
+         结构参见下图 </td>
         </tr>
     </tbody>
 </table>
 
-```
-可参考test目录下面的测试样例
-```
-
-##### 获取数据
+##### 获取数据示例
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/data.png)
 
+
+[更多参考测试样例](https://github.com/ydtg1993/dendrogram/blob/master/test/example.php)
