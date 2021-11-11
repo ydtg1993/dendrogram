@@ -93,6 +93,9 @@ EOF;
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogramUnlimitedSelect.js');
+        foreach ($default as $k=>$v){
+            $default[$k] = (int)$v;
+        }
         $js = sprintf($js, $label, $value, json_encode($default));
 
         $data = Func::getCache("NestedSet-Select-{$id}", $cache, function () use ($id) {

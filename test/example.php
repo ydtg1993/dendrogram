@@ -14,11 +14,14 @@ class TestDendrogram
      */
     function horizontal()
     {
-        /*数据类型可直接使用
-        *AdjacencyList::class 或 NestedSet::class 进行切换
+        /*
+        *  1.数据类型可直接使用 AdjacencyList::class 或 NestedSet::class 进行切换
+        *  2.cache缓存数据事件(秒) 文件缓存需要开启目录权限chmod -R 0777 vendor/dendrogram/
+        *  3.如果没有传递router参数:节点操作url 输出视图不会有默认的修改,新增的弹窗表单
         */
-        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildHorizontal(1,['name'],-1,'节点操作url');
-        /*如果没有传递router参数:节点操作url 视图不会有默认的修改,新增弹窗表单*/
+        echo (new \DenDroGram\Controller\DenDroGram(\DenDroGram\Controller\AdjacencyList::class))->buildHorizontal(1,['name'],-1,'节点操作url ...路由到方法operateNode');
+
+        /*在视图输出页 js操作方法说明*/
 
         /* 1.绑定事件到节点的标签tab,添加按钮grow：*/
         /*dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法); */
@@ -36,6 +39,7 @@ class TestDendrogram
         });
     </script>
 */
+
 
         /* 2.传递router参数:节点操作url 可以对表单内容做基本的设置 dendrogram.form.settings*/
         /*
@@ -65,30 +69,14 @@ class TestDendrogram
     });
 </script>
 */
-
-        /**
-        <script>
-        $(function() {
-        //1.如果没有传router参数
-        dendrogram.bindClassEnvent('dendrogram-tab',事件,回调方法);
-        //3.配置表单内容设置
-        dendrogram.form.settings = [
-            {column:'id',label:'编号',type:"disable"},
-            {column:'name',label:'名称',type:'textarea',attribute:''},
-            {column:'layer',label:'层级',type:'checkbox',options:[{label:'顶级',value:0}, {label:'次级',value:1},{label:'三级',value:2}]},
-            {column:'sort',label:'排序'}
-        ];
-
-        });
-        </script>
-         */
         exit;
     }
 
     /**
      * 节点操作方法 POST方式
+     * 返回数据json输出
      */
-    function operateHorizontal()
+    function operateNode()
     {
         $action = $_POST['action'];
         $data = $_POST['data'];
@@ -128,7 +116,7 @@ class TestDendrogram
             dendrogramUS.callback = function() {
             var data = dendrogramUS.storage()
             console.log(data)
-            alert('处罚点击事件回调 当前选中值:'+data);
+            alert('触发点击事件回调 当前选中值:'+data);
             }
             });
         </script>
