@@ -1,7 +1,7 @@
 <h3 align="center">PHP无限系统树图</h3>
 
 <p align="center">
-<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v2.0-orange.svg" alt="v2.0"></a>
+<a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/dendrogram-v2.1-orange.svg" alt="v2.0"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/laravel-5.*-yellow.svg" alt="laravel 5.*"></a>
 <a href="https://github.com/ydtg1993/dendrogram"><img src="https://img.shields.io/badge/PHP-%3E%3D5.6-blue.svg" alt="PHP>=5.6"></a>
 </p>
