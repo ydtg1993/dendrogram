@@ -122,7 +122,7 @@ EOF;
         $data = Func::getCache("AdjacencyList-TreeData-{$id}", $cache, function () use ($id) {
             return AdjacencyListModel::getChildren($id, 'DESC');
         });
-        return self::makeTeeData2($data);
+        return self::makeTeeData($data);
     }
 
     private static function makeTeeData($data)
@@ -148,39 +148,6 @@ EOF;
                             continue;
                         }
                         $tempDeepArray[$nextLayer][$b_k][$i_k]['children'] = $list;
-                        unset($tempDeepArray[$layer][$p_id]);
-                    }
-                }
-            }
-        }
-        return current(current(current(array_filter($tempDeepArray))));
-    }
-
-    private static function makeTeeData2($data)
-    {
-        $tempDeepArray = [];
-        foreach ($data as $item) {
-            $item['child'] = [];
-            $tmpData = ['id' => $item['id'], 'name' => $item['name'], 'child' => null];
-            $tempDeepArray[$item['layer']][$item['p_id']][] = $tmpData;
-        }
-
-        foreach ($tempDeepArray as $layer => $boundary) {
-            $nextLayer = $layer - 1;
-            foreach ($tempDeepArray[$layer] as $p_id => $list) {
-                if (!isset($tempDeepArray[$nextLayer])) {
-                    break;
-                }
-
-                foreach ($tempDeepArray[$nextLayer] as $b_k => $nextBoundaryList) {
-                    foreach ($nextBoundaryList as $i_k => $item) {
-                        if (empty($tempDeepArray[$layer])) {
-                            break(2);
-                        }
-                        if ($item['id'] !== $p_id) {
-                            continue;
-                        }
-                        $tempDeepArray[$nextLayer][$b_k][$i_k]['child'] = $list;
                         unset($tempDeepArray[$layer][$p_id]);
                     }
                 }
